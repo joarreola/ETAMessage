@@ -25,6 +25,19 @@
 		DF7DE4421F0EBB1300F62FC2 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF7DE4411F0EBB1300F62FC2 /* MapKit.framework */; };
 		DF7DE4441F0EBB4000F62FC2 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF7DE43F1F0EBB0600F62FC2 /* CloudKit.framework */; };
 		DF7DE4451F0EBB4800F62FC2 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF7DE4411F0EBB1300F62FC2 /* MapKit.framework */; };
+		DF7DE46F1F0EBDA900F62FC2 /* Cloud.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF7DE4621F0EBDA900F62FC2 /* Cloud.swift */; };
+		DF7DE4701F0EBDA900F62FC2 /* Eta.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF7DE4631F0EBDA900F62FC2 /* Eta.swift */; };
+		DF7DE4711F0EBDA900F62FC2 /* EtaNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF7DE4641F0EBDA900F62FC2 /* EtaNotifications.swift */; };
+		DF7DE4721F0EBDA900F62FC2 /* GPSLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF7DE4651F0EBDA900F62FC2 /* GPSLocation.swift */; };
+		DF7DE4731F0EBDA900F62FC2 /* LocalNotificationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF7DE4661F0EBDA900F62FC2 /* LocalNotificationDelegate.swift */; };
+		DF7DE4741F0EBDA900F62FC2 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF7DE4671F0EBDA900F62FC2 /* Location.swift */; };
+		DF7DE4751F0EBDA900F62FC2 /* MapUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF7DE4681F0EBDA900F62FC2 /* MapUpdate.swift */; };
+		DF7DE4761F0EBDA900F62FC2 /* MobilitySimulator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF7DE4691F0EBDA900F62FC2 /* MobilitySimulator.swift */; };
+		DF7DE4771F0EBDA900F62FC2 /* Poll.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF7DE46A1F0EBDA900F62FC2 /* Poll.swift */; };
+		DF7DE4781F0EBDA900F62FC2 /* PseudoNotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF7DE46B1F0EBDA900F62FC2 /* PseudoNotificationsViewController.swift */; };
+		DF7DE4791F0EBDA900F62FC2 /* Uploading.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF7DE46C1F0EBDA900F62FC2 /* Uploading.swift */; };
+		DF7DE47A1F0EBDA900F62FC2 /* Users.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF7DE46D1F0EBDA900F62FC2 /* Users.swift */; };
+		DF7DE47B1F0EBDA900F62FC2 /* UUIDViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF7DE46E1F0EBDA900F62FC2 /* UUIDViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -93,6 +106,19 @@
 		DF7DE43F1F0EBB0600F62FC2 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		DF7DE4411F0EBB1300F62FC2 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		DF7DE4431F0EBB3D00F62FC2 /* ETAMessage.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ETAMessage.entitlements; sourceTree = "<group>"; };
+		DF7DE4621F0EBDA900F62FC2 /* Cloud.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cloud.swift; sourceTree = "<group>"; };
+		DF7DE4631F0EBDA900F62FC2 /* Eta.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Eta.swift; sourceTree = "<group>"; };
+		DF7DE4641F0EBDA900F62FC2 /* EtaNotifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EtaNotifications.swift; sourceTree = "<group>"; };
+		DF7DE4651F0EBDA900F62FC2 /* GPSLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GPSLocation.swift; sourceTree = "<group>"; };
+		DF7DE4661F0EBDA900F62FC2 /* LocalNotificationDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalNotificationDelegate.swift; sourceTree = "<group>"; };
+		DF7DE4671F0EBDA900F62FC2 /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
+		DF7DE4681F0EBDA900F62FC2 /* MapUpdate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapUpdate.swift; sourceTree = "<group>"; };
+		DF7DE4691F0EBDA900F62FC2 /* MobilitySimulator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobilitySimulator.swift; sourceTree = "<group>"; };
+		DF7DE46A1F0EBDA900F62FC2 /* Poll.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Poll.swift; sourceTree = "<group>"; };
+		DF7DE46B1F0EBDA900F62FC2 /* PseudoNotificationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PseudoNotificationsViewController.swift; sourceTree = "<group>"; };
+		DF7DE46C1F0EBDA900F62FC2 /* Uploading.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Uploading.swift; sourceTree = "<group>"; };
+		DF7DE46D1F0EBDA900F62FC2 /* Users.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Users.swift; sourceTree = "<group>"; };
+		DF7DE46E1F0EBDA900F62FC2 /* UUIDViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UUIDViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -212,6 +238,19 @@
 		DF7DE42E1F0EBAED00F62FC2 /* MessagesExtension */ = {
 			isa = PBXGroup;
 			children = (
+				DF7DE4621F0EBDA900F62FC2 /* Cloud.swift */,
+				DF7DE4631F0EBDA900F62FC2 /* Eta.swift */,
+				DF7DE4641F0EBDA900F62FC2 /* EtaNotifications.swift */,
+				DF7DE4651F0EBDA900F62FC2 /* GPSLocation.swift */,
+				DF7DE4661F0EBDA900F62FC2 /* LocalNotificationDelegate.swift */,
+				DF7DE4671F0EBDA900F62FC2 /* Location.swift */,
+				DF7DE4681F0EBDA900F62FC2 /* MapUpdate.swift */,
+				DF7DE4691F0EBDA900F62FC2 /* MobilitySimulator.swift */,
+				DF7DE46A1F0EBDA900F62FC2 /* Poll.swift */,
+				DF7DE46B1F0EBDA900F62FC2 /* PseudoNotificationsViewController.swift */,
+				DF7DE46C1F0EBDA900F62FC2 /* Uploading.swift */,
+				DF7DE46D1F0EBDA900F62FC2 /* Users.swift */,
+				DF7DE46E1F0EBDA900F62FC2 /* UUIDViewController.swift */,
 				DF7DE43E1F0EBB0300F62FC2 /* MessagesExtension.entitlements */,
 				DF7DE42F1F0EBAED00F62FC2 /* MessagesViewController.swift */,
 				DF7DE4311F0EBAED00F62FC2 /* MainInterface.storyboard */,
@@ -478,7 +517,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DF7DE4771F0EBDA900F62FC2 /* Poll.swift in Sources */,
+				DF7DE4791F0EBDA900F62FC2 /* Uploading.swift in Sources */,
+				DF7DE4701F0EBDA900F62FC2 /* Eta.swift in Sources */,
+				DF7DE4731F0EBDA900F62FC2 /* LocalNotificationDelegate.swift in Sources */,
+				DF7DE4711F0EBDA900F62FC2 /* EtaNotifications.swift in Sources */,
+				DF7DE4751F0EBDA900F62FC2 /* MapUpdate.swift in Sources */,
+				DF7DE4761F0EBDA900F62FC2 /* MobilitySimulator.swift in Sources */,
 				DF7DE4301F0EBAED00F62FC2 /* MessagesViewController.swift in Sources */,
+				DF7DE4781F0EBDA900F62FC2 /* PseudoNotificationsViewController.swift in Sources */,
+				DF7DE47A1F0EBDA900F62FC2 /* Users.swift in Sources */,
+				DF7DE46F1F0EBDA900F62FC2 /* Cloud.swift in Sources */,
+				DF7DE47B1F0EBDA900F62FC2 /* UUIDViewController.swift in Sources */,
+				DF7DE4721F0EBDA900F62FC2 /* GPSLocation.swift in Sources */,
+				DF7DE4741F0EBDA900F62FC2 /* Location.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -786,6 +838,7 @@
 				DF7DE4151F0EBABE00F62FC2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DF7DE4161F0EBABE00F62FC2 /* Build configuration list for PBXNativeTarget "ETAMessageTests" */ = {
 			isa = XCConfigurationList;
@@ -794,6 +847,7 @@
 				DF7DE4181F0EBABE00F62FC2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DF7DE4191F0EBABE00F62FC2 /* Build configuration list for PBXNativeTarget "ETAMessageUITests" */ = {
 			isa = XCConfigurationList;
@@ -802,6 +856,7 @@
 				DF7DE41B1F0EBABE00F62FC2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DF7DE4371F0EBAED00F62FC2 /* Build configuration list for PBXNativeTarget "MessagesExtension" */ = {
 			isa = XCConfigurationList;
@@ -810,6 +865,7 @@
 				DF7DE4391F0EBAED00F62FC2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DF7DE43B1F0EBAED00F62FC2 /* Build configuration list for PBXNativeTarget "ETAMessages" */ = {
 			isa = XCConfigurationList;
@@ -818,6 +874,7 @@
 				DF7DE43D1F0EBAED00F62FC2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
