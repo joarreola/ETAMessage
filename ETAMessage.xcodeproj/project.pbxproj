@@ -15,6 +15,16 @@
 		DF7DE3F91F0EBABE00F62FC2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DF7DE3F71F0EBABE00F62FC2 /* LaunchScreen.storyboard */; };
 		DF7DE4041F0EBABE00F62FC2 /* ETAMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF7DE4031F0EBABE00F62FC2 /* ETAMessageTests.swift */; };
 		DF7DE40F1F0EBABE00F62FC2 /* ETAMessageUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF7DE40E1F0EBABE00F62FC2 /* ETAMessageUITests.swift */; };
+		DF7DE4211F0EBAED00F62FC2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DF7DE4201F0EBAED00F62FC2 /* Assets.xcassets */; };
+		DF7DE4281F0EBAED00F62FC2 /* MessagesExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = DF7DE4271F0EBAED00F62FC2 /* MessagesExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		DF7DE42D1F0EBAED00F62FC2 /* Messages.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF7DE42C1F0EBAED00F62FC2 /* Messages.framework */; };
+		DF7DE4301F0EBAED00F62FC2 /* MessagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF7DE42F1F0EBAED00F62FC2 /* MessagesViewController.swift */; };
+		DF7DE4331F0EBAED00F62FC2 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DF7DE4311F0EBAED00F62FC2 /* MainInterface.storyboard */; };
+		DF7DE4351F0EBAED00F62FC2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DF7DE4341F0EBAED00F62FC2 /* Assets.xcassets */; };
+		DF7DE4401F0EBB0600F62FC2 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF7DE43F1F0EBB0600F62FC2 /* CloudKit.framework */; };
+		DF7DE4421F0EBB1300F62FC2 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF7DE4411F0EBB1300F62FC2 /* MapKit.framework */; };
+		DF7DE4441F0EBB4000F62FC2 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF7DE43F1F0EBB0600F62FC2 /* CloudKit.framework */; };
+		DF7DE4451F0EBB4800F62FC2 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF7DE4411F0EBB1300F62FC2 /* MapKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,7 +42,28 @@
 			remoteGlobalIDString = DF7DE3E71F0EBABE00F62FC2;
 			remoteInfo = ETAMessage;
 		};
+		DF7DE4291F0EBAED00F62FC2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DF7DE3E01F0EBABE00F62FC2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DF7DE4261F0EBAED00F62FC2;
+			remoteInfo = MessagesExtension;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		DF7DE43A1F0EBAED00F62FC2 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				DF7DE4281F0EBAED00F62FC2 /* MessagesExtension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		DF7DE3E81F0EBABE00F62FC2 /* ETAMessage.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ETAMessage.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -49,6 +80,19 @@
 		DF7DE40A1F0EBABE00F62FC2 /* ETAMessageUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ETAMessageUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF7DE40E1F0EBABE00F62FC2 /* ETAMessageUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETAMessageUITests.swift; sourceTree = "<group>"; };
 		DF7DE4101F0EBABE00F62FC2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DF7DE41E1F0EBAED00F62FC2 /* ETAMessages.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ETAMessages.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DF7DE4201F0EBAED00F62FC2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		DF7DE4221F0EBAED00F62FC2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DF7DE4271F0EBAED00F62FC2 /* MessagesExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MessagesExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		DF7DE42C1F0EBAED00F62FC2 /* Messages.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Messages.framework; path = System/Library/Frameworks/Messages.framework; sourceTree = SDKROOT; };
+		DF7DE42F1F0EBAED00F62FC2 /* MessagesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesViewController.swift; sourceTree = "<group>"; };
+		DF7DE4321F0EBAED00F62FC2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		DF7DE4341F0EBAED00F62FC2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		DF7DE4361F0EBAED00F62FC2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DF7DE43E1F0EBB0300F62FC2 /* MessagesExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MessagesExtension.entitlements; sourceTree = "<group>"; };
+		DF7DE43F1F0EBB0600F62FC2 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		DF7DE4411F0EBB1300F62FC2 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		DF7DE4431F0EBB3D00F62FC2 /* ETAMessage.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ETAMessage.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +100,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DF7DE4451F0EBB4800F62FC2 /* MapKit.framework in Frameworks */,
+				DF7DE4441F0EBB4000F62FC2 /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -73,6 +119,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DF7DE4241F0EBAED00F62FC2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DF7DE42D1F0EBAED00F62FC2 /* Messages.framework in Frameworks */,
+				DF7DE4421F0EBB1300F62FC2 /* MapKit.framework in Frameworks */,
+				DF7DE4401F0EBB0600F62FC2 /* CloudKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -82,6 +138,9 @@
 				DF7DE3EA1F0EBABE00F62FC2 /* ETAMessage */,
 				DF7DE4021F0EBABE00F62FC2 /* ETAMessageTests */,
 				DF7DE40D1F0EBABE00F62FC2 /* ETAMessageUITests */,
+				DF7DE41F1F0EBAED00F62FC2 /* ETAMessages */,
+				DF7DE42E1F0EBAED00F62FC2 /* MessagesExtension */,
+				DF7DE42B1F0EBAED00F62FC2 /* Frameworks */,
 				DF7DE3E91F0EBABE00F62FC2 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -92,6 +151,8 @@
 				DF7DE3E81F0EBABE00F62FC2 /* ETAMessage.app */,
 				DF7DE3FF1F0EBABE00F62FC2 /* ETAMessageTests.xctest */,
 				DF7DE40A1F0EBABE00F62FC2 /* ETAMessageUITests.xctest */,
+				DF7DE41E1F0EBAED00F62FC2 /* ETAMessages.app */,
+				DF7DE4271F0EBAED00F62FC2 /* MessagesExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -99,6 +160,7 @@
 		DF7DE3EA1F0EBABE00F62FC2 /* ETAMessage */ = {
 			isa = PBXGroup;
 			children = (
+				DF7DE4431F0EBB3D00F62FC2 /* ETAMessage.entitlements */,
 				DF7DE3EB1F0EBABE00F62FC2 /* AppDelegate.swift */,
 				DF7DE3ED1F0EBABE00F62FC2 /* ViewController.swift */,
 				DF7DE3EF1F0EBABE00F62FC2 /* Main.storyboard */,
@@ -126,6 +188,37 @@
 				DF7DE4101F0EBABE00F62FC2 /* Info.plist */,
 			);
 			path = ETAMessageUITests;
+			sourceTree = "<group>";
+		};
+		DF7DE41F1F0EBAED00F62FC2 /* ETAMessages */ = {
+			isa = PBXGroup;
+			children = (
+				DF7DE4201F0EBAED00F62FC2 /* Assets.xcassets */,
+				DF7DE4221F0EBAED00F62FC2 /* Info.plist */,
+			);
+			path = ETAMessages;
+			sourceTree = "<group>";
+		};
+		DF7DE42B1F0EBAED00F62FC2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DF7DE4411F0EBB1300F62FC2 /* MapKit.framework */,
+				DF7DE43F1F0EBB0600F62FC2 /* CloudKit.framework */,
+				DF7DE42C1F0EBAED00F62FC2 /* Messages.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DF7DE42E1F0EBAED00F62FC2 /* MessagesExtension */ = {
+			isa = PBXGroup;
+			children = (
+				DF7DE43E1F0EBB0300F62FC2 /* MessagesExtension.entitlements */,
+				DF7DE42F1F0EBAED00F62FC2 /* MessagesViewController.swift */,
+				DF7DE4311F0EBAED00F62FC2 /* MainInterface.storyboard */,
+				DF7DE4341F0EBAED00F62FC2 /* Assets.xcassets */,
+				DF7DE4361F0EBAED00F62FC2 /* Info.plist */,
+			);
+			path = MessagesExtension;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -184,6 +277,40 @@
 			productReference = DF7DE40A1F0EBABE00F62FC2 /* ETAMessageUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		DF7DE41D1F0EBAED00F62FC2 /* ETAMessages */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DF7DE43B1F0EBAED00F62FC2 /* Build configuration list for PBXNativeTarget "ETAMessages" */;
+			buildPhases = (
+				DF7DE41C1F0EBAED00F62FC2 /* Resources */,
+				DF7DE43A1F0EBAED00F62FC2 /* Embed App Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DF7DE42A1F0EBAED00F62FC2 /* PBXTargetDependency */,
+			);
+			name = ETAMessages;
+			productName = ETAMessages;
+			productReference = DF7DE41E1F0EBAED00F62FC2 /* ETAMessages.app */;
+			productType = "com.apple.product-type.application.messages";
+		};
+		DF7DE4261F0EBAED00F62FC2 /* MessagesExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DF7DE4371F0EBAED00F62FC2 /* Build configuration list for PBXNativeTarget "MessagesExtension" */;
+			buildPhases = (
+				DF7DE4231F0EBAED00F62FC2 /* Sources */,
+				DF7DE4241F0EBAED00F62FC2 /* Frameworks */,
+				DF7DE4251F0EBAED00F62FC2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MessagesExtension;
+			productName = MessagesExtension;
+			productReference = DF7DE4271F0EBAED00F62FC2 /* MessagesExtension.appex */;
+			productType = "com.apple.product-type.app-extension.messages";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -198,6 +325,23 @@
 						CreatedOnToolsVersion = 8.3.2;
 						DevelopmentTeam = J5W47NE3WW;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.Maps.iOS = {
+								enabled = 1;
+							};
+							com.apple.Push = {
+								enabled = 1;
+							};
+							com.apple.iCloud = {
+								enabled = 1;
+							};
+						};
 					};
 					DF7DE3FE1F0EBABE00F62FC2 = {
 						CreatedOnToolsVersion = 8.3.2;
@@ -210,6 +354,30 @@
 						DevelopmentTeam = J5W47NE3WW;
 						ProvisioningStyle = Automatic;
 						TestTargetID = DF7DE3E71F0EBABE00F62FC2;
+					};
+					DF7DE41D1F0EBAED00F62FC2 = {
+						CreatedOnToolsVersion = 8.3.2;
+						DevelopmentTeam = J5W47NE3WW;
+						ProvisioningStyle = Automatic;
+					};
+					DF7DE4261F0EBAED00F62FC2 = {
+						CreatedOnToolsVersion = 8.3.2;
+						DevelopmentTeam = J5W47NE3WW;
+						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+							com.apple.Maps.iOS = {
+								enabled = 1;
+							};
+							com.apple.Push = {
+								enabled = 1;
+							};
+							com.apple.iCloud = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -229,6 +397,8 @@
 				DF7DE3E71F0EBABE00F62FC2 /* ETAMessage */,
 				DF7DE3FE1F0EBABE00F62FC2 /* ETAMessageTests */,
 				DF7DE4091F0EBABE00F62FC2 /* ETAMessageUITests */,
+				DF7DE41D1F0EBAED00F62FC2 /* ETAMessages */,
+				DF7DE4261F0EBAED00F62FC2 /* MessagesExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -255,6 +425,23 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DF7DE41C1F0EBAED00F62FC2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DF7DE4211F0EBAED00F62FC2 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DF7DE4251F0EBAED00F62FC2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DF7DE4351F0EBAED00F62FC2 /* Assets.xcassets in Resources */,
+				DF7DE4331F0EBAED00F62FC2 /* MainInterface.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -287,6 +474,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DF7DE4231F0EBAED00F62FC2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DF7DE4301F0EBAED00F62FC2 /* MessagesViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -299,6 +494,11 @@
 			isa = PBXTargetDependency;
 			target = DF7DE3E71F0EBABE00F62FC2 /* ETAMessage */;
 			targetProxy = DF7DE40B1F0EBABE00F62FC2 /* PBXContainerItemProxy */;
+		};
+		DF7DE42A1F0EBAED00F62FC2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DF7DE4261F0EBAED00F62FC2 /* MessagesExtension */;
+			targetProxy = DF7DE4291F0EBAED00F62FC2 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -317,6 +517,14 @@
 				DF7DE3F81F0EBABE00F62FC2 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		DF7DE4311F0EBAED00F62FC2 /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DF7DE4321F0EBAED00F62FC2 /* Base */,
+			);
+			name = MainInterface.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -421,6 +629,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = ETAMessage/ETAMessage.entitlements;
 				DEVELOPMENT_TEAM = J5W47NE3WW;
 				INFOPLIST_FILE = ETAMessage/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -434,6 +643,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = ETAMessage/ETAMessage.entitlements;
 				DEVELOPMENT_TEAM = J5W47NE3WW;
 				INFOPLIST_FILE = ETAMessage/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -501,6 +711,62 @@
 			};
 			name = Release;
 		};
+		DF7DE4381F0EBAED00F62FC2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
+				CODE_SIGN_ENTITLEMENTS = MessagesExtension/MessagesExtension.entitlements;
+				DEVELOPMENT_TEAM = J5W47NE3WW;
+				INFOPLIST_FILE = MessagesExtension/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = edu.ucsc.ETAMessages.MessagesExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		DF7DE4391F0EBAED00F62FC2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
+				CODE_SIGN_ENTITLEMENTS = MessagesExtension/MessagesExtension.entitlements;
+				DEVELOPMENT_TEAM = J5W47NE3WW;
+				INFOPLIST_FILE = MessagesExtension/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = edu.ucsc.ETAMessages.MessagesExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+		DF7DE43C1F0EBAED00F62FC2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = J5W47NE3WW;
+				INFOPLIST_FILE = ETAMessages/Info.plist;
+				PRODUCT_BUNDLE_IDENTIFIER = edu.ucsc.ETAMessages;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		DF7DE43D1F0EBAED00F62FC2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = J5W47NE3WW;
+				INFOPLIST_FILE = ETAMessages/Info.plist;
+				PRODUCT_BUNDLE_IDENTIFIER = edu.ucsc.ETAMessages;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -534,6 +800,22 @@
 			buildConfigurations = (
 				DF7DE41A1F0EBABE00F62FC2 /* Debug */,
 				DF7DE41B1F0EBABE00F62FC2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		DF7DE4371F0EBAED00F62FC2 /* Build configuration list for PBXNativeTarget "MessagesExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DF7DE4381F0EBAED00F62FC2 /* Debug */,
+				DF7DE4391F0EBAED00F62FC2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		DF7DE43B1F0EBAED00F62FC2 /* Build configuration list for PBXNativeTarget "ETAMessages" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DF7DE43C1F0EBAED00F62FC2 /* Debug */,
+				DF7DE43D1F0EBAED00F62FC2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 		};
