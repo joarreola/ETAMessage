@@ -1,0 +1,556 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		DF7DE3EC1F0EBABE00F62FC2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF7DE3EB1F0EBABE00F62FC2 /* AppDelegate.swift */; };
+		DF7DE3EE1F0EBABE00F62FC2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF7DE3ED1F0EBABE00F62FC2 /* ViewController.swift */; };
+		DF7DE3F11F0EBABE00F62FC2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DF7DE3EF1F0EBABE00F62FC2 /* Main.storyboard */; };
+		DF7DE3F41F0EBABE00F62FC2 /* ETAMessage.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DF7DE3F21F0EBABE00F62FC2 /* ETAMessage.xcdatamodeld */; };
+		DF7DE3F61F0EBABE00F62FC2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DF7DE3F51F0EBABE00F62FC2 /* Assets.xcassets */; };
+		DF7DE3F91F0EBABE00F62FC2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DF7DE3F71F0EBABE00F62FC2 /* LaunchScreen.storyboard */; };
+		DF7DE4041F0EBABE00F62FC2 /* ETAMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF7DE4031F0EBABE00F62FC2 /* ETAMessageTests.swift */; };
+		DF7DE40F1F0EBABE00F62FC2 /* ETAMessageUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF7DE40E1F0EBABE00F62FC2 /* ETAMessageUITests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		DF7DE4001F0EBABE00F62FC2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DF7DE3E01F0EBABE00F62FC2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DF7DE3E71F0EBABE00F62FC2;
+			remoteInfo = ETAMessage;
+		};
+		DF7DE40B1F0EBABE00F62FC2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DF7DE3E01F0EBABE00F62FC2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DF7DE3E71F0EBABE00F62FC2;
+			remoteInfo = ETAMessage;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		DF7DE3E81F0EBABE00F62FC2 /* ETAMessage.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ETAMessage.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DF7DE3EB1F0EBABE00F62FC2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		DF7DE3ED1F0EBABE00F62FC2 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		DF7DE3F01F0EBABE00F62FC2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		DF7DE3F31F0EBABE00F62FC2 /* ETAMessage.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ETAMessage.xcdatamodel; sourceTree = "<group>"; };
+		DF7DE3F51F0EBABE00F62FC2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		DF7DE3F81F0EBABE00F62FC2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		DF7DE3FA1F0EBABE00F62FC2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DF7DE3FF1F0EBABE00F62FC2 /* ETAMessageTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ETAMessageTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		DF7DE4031F0EBABE00F62FC2 /* ETAMessageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETAMessageTests.swift; sourceTree = "<group>"; };
+		DF7DE4051F0EBABE00F62FC2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DF7DE40A1F0EBABE00F62FC2 /* ETAMessageUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ETAMessageUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		DF7DE40E1F0EBABE00F62FC2 /* ETAMessageUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETAMessageUITests.swift; sourceTree = "<group>"; };
+		DF7DE4101F0EBABE00F62FC2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		DF7DE3E51F0EBABE00F62FC2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DF7DE3FC1F0EBABE00F62FC2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DF7DE4071F0EBABE00F62FC2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		DF7DE3DF1F0EBABE00F62FC2 = {
+			isa = PBXGroup;
+			children = (
+				DF7DE3EA1F0EBABE00F62FC2 /* ETAMessage */,
+				DF7DE4021F0EBABE00F62FC2 /* ETAMessageTests */,
+				DF7DE40D1F0EBABE00F62FC2 /* ETAMessageUITests */,
+				DF7DE3E91F0EBABE00F62FC2 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		DF7DE3E91F0EBABE00F62FC2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DF7DE3E81F0EBABE00F62FC2 /* ETAMessage.app */,
+				DF7DE3FF1F0EBABE00F62FC2 /* ETAMessageTests.xctest */,
+				DF7DE40A1F0EBABE00F62FC2 /* ETAMessageUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		DF7DE3EA1F0EBABE00F62FC2 /* ETAMessage */ = {
+			isa = PBXGroup;
+			children = (
+				DF7DE3EB1F0EBABE00F62FC2 /* AppDelegate.swift */,
+				DF7DE3ED1F0EBABE00F62FC2 /* ViewController.swift */,
+				DF7DE3EF1F0EBABE00F62FC2 /* Main.storyboard */,
+				DF7DE3F51F0EBABE00F62FC2 /* Assets.xcassets */,
+				DF7DE3F71F0EBABE00F62FC2 /* LaunchScreen.storyboard */,
+				DF7DE3FA1F0EBABE00F62FC2 /* Info.plist */,
+				DF7DE3F21F0EBABE00F62FC2 /* ETAMessage.xcdatamodeld */,
+			);
+			path = ETAMessage;
+			sourceTree = "<group>";
+		};
+		DF7DE4021F0EBABE00F62FC2 /* ETAMessageTests */ = {
+			isa = PBXGroup;
+			children = (
+				DF7DE4031F0EBABE00F62FC2 /* ETAMessageTests.swift */,
+				DF7DE4051F0EBABE00F62FC2 /* Info.plist */,
+			);
+			path = ETAMessageTests;
+			sourceTree = "<group>";
+		};
+		DF7DE40D1F0EBABE00F62FC2 /* ETAMessageUITests */ = {
+			isa = PBXGroup;
+			children = (
+				DF7DE40E1F0EBABE00F62FC2 /* ETAMessageUITests.swift */,
+				DF7DE4101F0EBABE00F62FC2 /* Info.plist */,
+			);
+			path = ETAMessageUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		DF7DE3E71F0EBABE00F62FC2 /* ETAMessage */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DF7DE4131F0EBABE00F62FC2 /* Build configuration list for PBXNativeTarget "ETAMessage" */;
+			buildPhases = (
+				DF7DE3E41F0EBABE00F62FC2 /* Sources */,
+				DF7DE3E51F0EBABE00F62FC2 /* Frameworks */,
+				DF7DE3E61F0EBABE00F62FC2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ETAMessage;
+			productName = ETAMessage;
+			productReference = DF7DE3E81F0EBABE00F62FC2 /* ETAMessage.app */;
+			productType = "com.apple.product-type.application";
+		};
+		DF7DE3FE1F0EBABE00F62FC2 /* ETAMessageTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DF7DE4161F0EBABE00F62FC2 /* Build configuration list for PBXNativeTarget "ETAMessageTests" */;
+			buildPhases = (
+				DF7DE3FB1F0EBABE00F62FC2 /* Sources */,
+				DF7DE3FC1F0EBABE00F62FC2 /* Frameworks */,
+				DF7DE3FD1F0EBABE00F62FC2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DF7DE4011F0EBABE00F62FC2 /* PBXTargetDependency */,
+			);
+			name = ETAMessageTests;
+			productName = ETAMessageTests;
+			productReference = DF7DE3FF1F0EBABE00F62FC2 /* ETAMessageTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		DF7DE4091F0EBABE00F62FC2 /* ETAMessageUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DF7DE4191F0EBABE00F62FC2 /* Build configuration list for PBXNativeTarget "ETAMessageUITests" */;
+			buildPhases = (
+				DF7DE4061F0EBABE00F62FC2 /* Sources */,
+				DF7DE4071F0EBABE00F62FC2 /* Frameworks */,
+				DF7DE4081F0EBABE00F62FC2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DF7DE40C1F0EBABE00F62FC2 /* PBXTargetDependency */,
+			);
+			name = ETAMessageUITests;
+			productName = ETAMessageUITests;
+			productReference = DF7DE40A1F0EBABE00F62FC2 /* ETAMessageUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		DF7DE3E01F0EBABE00F62FC2 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0830;
+				LastUpgradeCheck = 0830;
+				ORGANIZATIONNAME = "Oscar Arreola";
+				TargetAttributes = {
+					DF7DE3E71F0EBABE00F62FC2 = {
+						CreatedOnToolsVersion = 8.3.2;
+						DevelopmentTeam = J5W47NE3WW;
+						ProvisioningStyle = Automatic;
+					};
+					DF7DE3FE1F0EBABE00F62FC2 = {
+						CreatedOnToolsVersion = 8.3.2;
+						DevelopmentTeam = J5W47NE3WW;
+						ProvisioningStyle = Automatic;
+						TestTargetID = DF7DE3E71F0EBABE00F62FC2;
+					};
+					DF7DE4091F0EBABE00F62FC2 = {
+						CreatedOnToolsVersion = 8.3.2;
+						DevelopmentTeam = J5W47NE3WW;
+						ProvisioningStyle = Automatic;
+						TestTargetID = DF7DE3E71F0EBABE00F62FC2;
+					};
+				};
+			};
+			buildConfigurationList = DF7DE3E31F0EBABE00F62FC2 /* Build configuration list for PBXProject "ETAMessage" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = DF7DE3DF1F0EBABE00F62FC2;
+			productRefGroup = DF7DE3E91F0EBABE00F62FC2 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				DF7DE3E71F0EBABE00F62FC2 /* ETAMessage */,
+				DF7DE3FE1F0EBABE00F62FC2 /* ETAMessageTests */,
+				DF7DE4091F0EBABE00F62FC2 /* ETAMessageUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		DF7DE3E61F0EBABE00F62FC2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DF7DE3F91F0EBABE00F62FC2 /* LaunchScreen.storyboard in Resources */,
+				DF7DE3F61F0EBABE00F62FC2 /* Assets.xcassets in Resources */,
+				DF7DE3F11F0EBABE00F62FC2 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DF7DE3FD1F0EBABE00F62FC2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DF7DE4081F0EBABE00F62FC2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		DF7DE3E41F0EBABE00F62FC2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DF7DE3EE1F0EBABE00F62FC2 /* ViewController.swift in Sources */,
+				DF7DE3F41F0EBABE00F62FC2 /* ETAMessage.xcdatamodeld in Sources */,
+				DF7DE3EC1F0EBABE00F62FC2 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DF7DE3FB1F0EBABE00F62FC2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DF7DE4041F0EBABE00F62FC2 /* ETAMessageTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DF7DE4061F0EBABE00F62FC2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DF7DE40F1F0EBABE00F62FC2 /* ETAMessageUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		DF7DE4011F0EBABE00F62FC2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DF7DE3E71F0EBABE00F62FC2 /* ETAMessage */;
+			targetProxy = DF7DE4001F0EBABE00F62FC2 /* PBXContainerItemProxy */;
+		};
+		DF7DE40C1F0EBABE00F62FC2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DF7DE3E71F0EBABE00F62FC2 /* ETAMessage */;
+			targetProxy = DF7DE40B1F0EBABE00F62FC2 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		DF7DE3EF1F0EBABE00F62FC2 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DF7DE3F01F0EBABE00F62FC2 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		DF7DE3F71F0EBABE00F62FC2 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DF7DE3F81F0EBABE00F62FC2 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		DF7DE4111F0EBABE00F62FC2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		DF7DE4121F0EBABE00F62FC2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		DF7DE4141F0EBABE00F62FC2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = J5W47NE3WW;
+				INFOPLIST_FILE = ETAMessage/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = edu.ucsc.ETAMessage;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		DF7DE4151F0EBABE00F62FC2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = J5W47NE3WW;
+				INFOPLIST_FILE = ETAMessage/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = edu.ucsc.ETAMessage;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+		DF7DE4171F0EBABE00F62FC2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = J5W47NE3WW;
+				INFOPLIST_FILE = ETAMessageTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = edu.ucsc.ETAMessageTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ETAMessage.app/ETAMessage";
+			};
+			name = Debug;
+		};
+		DF7DE4181F0EBABE00F62FC2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = J5W47NE3WW;
+				INFOPLIST_FILE = ETAMessageTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = edu.ucsc.ETAMessageTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ETAMessage.app/ETAMessage";
+			};
+			name = Release;
+		};
+		DF7DE41A1F0EBABE00F62FC2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				DEVELOPMENT_TEAM = J5W47NE3WW;
+				INFOPLIST_FILE = ETAMessageUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = edu.ucsc.ETAMessageUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = ETAMessage;
+			};
+			name = Debug;
+		};
+		DF7DE41B1F0EBABE00F62FC2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				DEVELOPMENT_TEAM = J5W47NE3WW;
+				INFOPLIST_FILE = ETAMessageUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = edu.ucsc.ETAMessageUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = ETAMessage;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		DF7DE3E31F0EBABE00F62FC2 /* Build configuration list for PBXProject "ETAMessage" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DF7DE4111F0EBABE00F62FC2 /* Debug */,
+				DF7DE4121F0EBABE00F62FC2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DF7DE4131F0EBABE00F62FC2 /* Build configuration list for PBXNativeTarget "ETAMessage" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DF7DE4141F0EBABE00F62FC2 /* Debug */,
+				DF7DE4151F0EBABE00F62FC2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		DF7DE4161F0EBABE00F62FC2 /* Build configuration list for PBXNativeTarget "ETAMessageTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DF7DE4171F0EBABE00F62FC2 /* Debug */,
+				DF7DE4181F0EBABE00F62FC2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		DF7DE4191F0EBABE00F62FC2 /* Build configuration list for PBXNativeTarget "ETAMessageUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DF7DE41A1F0EBABE00F62FC2 /* Debug */,
+				DF7DE41B1F0EBABE00F62FC2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		DF7DE3F21F0EBABE00F62FC2 /* ETAMessage.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				DF7DE3F31F0EBABE00F62FC2 /* ETAMessage.xcdatamodel */,
+			);
+			currentVersion = DF7DE3F31F0EBABE00F62FC2 /* ETAMessage.xcdatamodel */;
+			path = ETAMessage.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = DF7DE3E01F0EBABE00F62FC2 /* Project object */;
+}
