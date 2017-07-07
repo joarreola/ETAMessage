@@ -257,7 +257,8 @@ class MessagesViewController: MSMessagesAppViewController, MKMapViewDelegate, CL
      * Called on tap of Enable button
      *
      */
-    @IBAction func enable(_ sender: UIBarButtonItem) {
+    @IBAction func upload(_ sender: UIBarButtonItem) {
+
         // Entry point to start uploading the current location to iCloud repository
         
         // reenable in case disabled
@@ -338,8 +339,14 @@ class MessagesViewController: MSMessagesAppViewController, MKMapViewDelegate, CL
         UUIDViewController.uuidIndicator.URLMessage?.text = "LOCAL\n" + "\(String(describing: queryItem.value!))"
     }
 
-    @IBAction func mobilitySumulation(_ sender: UIBarButtonItem) {
-        
+
+    /**
+     *
+     * Called on tap of Simulate button
+     *
+     */
+    @IBAction func simulate(_ sender: UIBarButtonItem) {
+
         // reset localUser and remoteUser names to the respective UUID strings
         localUser.name = String(describing: self.localUUID)
         localUser.location.userName = String(describing: self.localUUID)
@@ -375,7 +382,8 @@ class MessagesViewController: MSMessagesAppViewController, MKMapViewDelegate, CL
      * Called on tap of Poll button
      *
      */
-    @IBAction func poll(_ sender: UIBarButtonItem) {
+    @IBAction func fetch(_ sender: UIBarButtonItem) {
+    
         // check for remoteUser record
 
         self.startPolling()
@@ -460,6 +468,7 @@ class MessagesViewController: MSMessagesAppViewController, MKMapViewDelegate, CL
      *
      */
     @IBAction func disable(_ sender: UIBarButtonItem) {
+
         // Remove location record from iCloud repository.
 
         // reset localUser and remoteUser names to the respective UUID strings

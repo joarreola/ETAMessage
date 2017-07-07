@@ -1,14 +1,18 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11134" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="ObA-dk-sSI">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="ObA-dk-sSI">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11106"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Messages View Controller-->
         <scene sceneID="7MM-of-jgj">
             <objects>
-                <viewController id="ObA-dk-sSI" customClass="MessagesViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="ObA-dk-sSI" customClass="MessagesViewController" customModule="MessagesExtension" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="qkL-Od-lgU"/>
                         <viewControllerLayoutGuide type="bottom" id="n38-gi-rB5"/>
@@ -17,23 +21,119 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="528"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hello World" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d1e-fi-ked">
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="5IX-QP-7b6">
+                                <rect key="frame" x="0.0" y="20" width="320" height="508"/>
+                            </mapView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jCj-Du-fUw">
+                                <rect key="frame" x="0.0" y="484" width="320" height="44"/>
+                                <items>
+                                    <barButtonItem title="Simulate" id="iKj-kz-3Wd">
+                                        <connections>
+                                            <action selector="simulate:" destination="ObA-dk-sSI" id="7bF-h0-V1R"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem systemItem="flexibleSpace" id="Mgy-bi-lhs"/>
+                                    <barButtonItem title="Upload" id="jnA-P9-fZu">
+                                        <connections>
+                                            <action selector="upload:" destination="ObA-dk-sSI" id="BNb-zo-4G0"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem systemItem="flexibleSpace" id="v87-ks-eEO"/>
+                                    <barButtonItem title="Fetch" id="QQQ-C7-hMe">
+                                        <connections>
+                                            <action selector="fetch:" destination="ObA-dk-sSI" id="C6K-vd-S9i"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem systemItem="flexibleSpace" id="L8X-BP-5wT"/>
+                                    <barButtonItem title="Disable" id="lOv-cw-tyZ">
+                                        <connections>
+                                            <action selector="disable:" destination="ObA-dk-sSI" id="fyL-gD-FeU"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
+                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.69999999999999996" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" numberOfLines="6" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hfw-zo-kYl">
+                                <rect key="frame" x="0.0" y="474" width="320" height="0.0"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q0w-Bt-r6o">
+                                <rect key="frame" x="0.0" y="474" width="320" height="10"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="10" id="R0y-w2-JPY"/>
+                                </constraints>
+                                <connections>
+                                    <segue destination="Elz-wX-Yx1" kind="embed" id="OUD-12-C8r"/>
+                                </connections>
+                            </containerView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstAttribute="centerY" secondItem="d1e-fi-ked" secondAttribute="centerY" id="H0s-hz-dDP"/>
-                            <constraint firstAttribute="centerX" secondItem="d1e-fi-ked" secondAttribute="centerX" id="wFy-hW-Bib"/>
+                            <constraint firstItem="5IX-QP-7b6" firstAttribute="leading" secondItem="zMn-AG-sqS" secondAttribute="leading" id="2gZ-ph-aow"/>
+                            <constraint firstItem="jCj-Du-fUw" firstAttribute="leading" secondItem="q0w-Bt-r6o" secondAttribute="leading" id="3CQ-Zz-tq7"/>
+                            <constraint firstItem="n38-gi-rB5" firstAttribute="top" secondItem="5IX-QP-7b6" secondAttribute="bottom" id="Bnn-LN-KeH"/>
+                            <constraint firstItem="jCj-Du-fUw" firstAttribute="trailing" secondItem="hfw-zo-kYl" secondAttribute="trailing" id="Nmh-N0-qYy"/>
+                            <constraint firstItem="n38-gi-rB5" firstAttribute="top" secondItem="jCj-Du-fUw" secondAttribute="bottom" id="OwZ-D0-VfF"/>
+                            <constraint firstItem="jCj-Du-fUw" firstAttribute="leading" secondItem="hfw-zo-kYl" secondAttribute="leading" id="PDe-VE-FH3"/>
+                            <constraint firstItem="jCj-Du-fUw" firstAttribute="trailing" secondItem="q0w-Bt-r6o" secondAttribute="trailing" id="S81-yY-jFq"/>
+                            <constraint firstItem="jCj-Du-fUw" firstAttribute="trailing" secondItem="5IX-QP-7b6" secondAttribute="trailing" id="SsJ-kB-qQy"/>
+                            <constraint firstItem="5IX-QP-7b6" firstAttribute="top" secondItem="qkL-Od-lgU" secondAttribute="bottom" id="TTa-bi-Xpd"/>
+                            <constraint firstAttribute="trailing" secondItem="5IX-QP-7b6" secondAttribute="trailing" id="ifM-k1-np9"/>
+                            <constraint firstItem="jCj-Du-fUw" firstAttribute="leading" secondItem="5IX-QP-7b6" secondAttribute="leading" id="nMc-pZ-OXN"/>
+                            <constraint firstItem="jCj-Du-fUw" firstAttribute="top" secondItem="q0w-Bt-r6o" secondAttribute="bottom" id="nzy-Or-zcU"/>
+                            <constraint firstItem="q0w-Bt-r6o" firstAttribute="top" secondItem="hfw-zo-kYl" secondAttribute="bottom" id="zm7-5f-4uJ"/>
                         </constraints>
                     </view>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="320" height="528"/>
+                    <connections>
+                        <outlet property="display" destination="hfw-zo-kYl" id="hHD-Ph-aJO"/>
+                        <outlet property="mapView" destination="5IX-QP-7b6" id="v1w-Q5-Tc9"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="X47-rx-isc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
+        </scene>
+        <!--Eta Adapter-->
+        <scene sceneID="6Cn-4u-5JM">
+            <objects>
+                <viewController id="Elz-wX-Yx1" customClass="EtaAdapter" customModule="MessagesExtension" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="srw-lN-pSo">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="10"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <progressView opaque="NO" alpha="0.40000000000000002" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QZa-yR-hW9">
+                                <rect key="frame" x="0.0" y="4" width="320" height="2"/>
+                                <color key="progressTintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="trackTintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </progressView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DVu-GJ-VEa">
+                                <rect key="frame" x="160" y="5.5" width="0.0" height="0.0"/>
+                                <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="DVu-GJ-VEa" firstAttribute="centerX" secondItem="srw-lN-pSo" secondAttribute="centerX" id="1ha-Ig-ADq"/>
+                            <constraint firstAttribute="trailing" secondItem="QZa-yR-hW9" secondAttribute="trailing" id="RN5-fP-ZkJ"/>
+                            <constraint firstItem="QZa-yR-hW9" firstAttribute="centerY" secondItem="srw-lN-pSo" secondAttribute="centerY" id="WeU-I7-BER"/>
+                            <constraint firstItem="DVu-GJ-VEa" firstAttribute="centerY" secondItem="srw-lN-pSo" secondAttribute="centerY" id="enb-a6-j95"/>
+                            <constraint firstItem="QZa-yR-hW9" firstAttribute="centerX" secondItem="srw-lN-pSo" secondAttribute="centerX" id="n3O-Kc-ll4"/>
+                            <constraint firstItem="QZa-yR-hW9" firstAttribute="leading" secondItem="srw-lN-pSo" secondAttribute="leading" id="y3H-f9-3qi"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="etaProgress" destination="QZa-yR-hW9" id="2Eq-ut-PiH"/>
+                        <outlet property="progressLabel" destination="DVu-GJ-VEa" id="Lhh-Bh-a2j"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zof-j0-WIF" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="42" y="491"/>
         </scene>
     </scenes>
 </document>

@@ -27,11 +27,11 @@ class EtaAdapter: UIViewController {
     static var distance: Double? = nil
     private var mapUdate: MapUpdate = MapUpdate()
     static var previousDistance: TimeInterval? = nil
-    
+
     @IBOutlet weak var etaProgress: UIProgressView!
-    
     @IBOutlet weak var progressLabel: UILabel!
     
+
     static var etaIndicator = ETAIndicator()
 
     override func viewDidLoad() {
