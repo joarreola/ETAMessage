@@ -54,7 +54,7 @@ class MessagesViewController: MSMessagesAppViewController, MKMapViewDelegate, CL
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        //print("-- viewDidLoad -----------------------------------------------------")
+        print("-- viewDidLoad -----------------------------------------------------")
         
         self.locationManager.delegate = self
         self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
@@ -92,7 +92,7 @@ class MessagesViewController: MSMessagesAppViewController, MKMapViewDelegate, CL
         self.localUUID = conversation.localParticipantIdentifier
         
         // refresh mapView
-        self.mapUpdate.refreshMapView(packet: self.localUser.location, mapView: self.mapView)
+        //self.mapUpdate.refreshMapView(packet: self.localUser.location, mapView: self.mapView)
 
         let controller: UUIDViewController = UUIDViewController()
     
