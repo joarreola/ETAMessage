@@ -322,7 +322,7 @@ class MessagesViewController: MSMessagesAppViewController, MKMapViewDelegate, CL
         components.queryItems = [queryItem]
         
         let layout = MSMessageTemplateLayout()
-        layout.image = UIImage(named: "applePark.png")
+        layout.image = UIImage(named: "")
         layout.caption = "UUID"
         
         let message = MSMessage()

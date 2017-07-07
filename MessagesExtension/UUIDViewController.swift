@@ -13,9 +13,9 @@ struct UUIDIndicator {
 }
 
 class UUIDViewController: UIViewController {
-    
+
     @IBOutlet weak var URLMessage: UILabel!
-    
+
     var messageInUrl: String = ""
     
     static var uuidIndicator = UUIDIndicator()
