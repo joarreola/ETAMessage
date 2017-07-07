@@ -44,7 +44,7 @@ class MessagesViewController: MSMessagesAppViewController, MKMapViewDelegate, CL
     var mapUpdate = MapUpdate()
     var uploading = UploadingManager(name: "Oscar-iphone")
     var gpsLocation = GPSLocationAdapter()
-    var mobilitySimulator = MobilitySimulator(userName: "Oscar-iphone")
+    //var mobilitySimulator = MobilitySimulator(userName: "Oscar-iphone")
     
     var locPacketUpdated: Bool = false
     static var locationManagerEnabled: Bool = true
@@ -346,6 +346,9 @@ class MessagesViewController: MSMessagesAppViewController, MKMapViewDelegate, CL
      *
      */
     @IBAction func simulate(_ sender: UIBarButtonItem) {
+        
+        // move instantiation to inside simulate() scope
+        let mobilitySimulator = MobilitySimulator(userName: String(describing: self.localUUID))
 
         // reset localUser and remoteUser names to the respective UUID strings
         localUser.name = String(describing: self.localUUID)
@@ -494,7 +497,8 @@ class MessagesViewController: MSMessagesAppViewController, MKMapViewDelegate, CL
 
         uploading.disableUploading()
         pollManager.disablePolling()
-        mobilitySimulator.stopMobilitySimulator()
+        //MobilitySimulator?.stopMobilitySimulator()
+        MobilitySimulator.mobilitySimulatorEnabled = false
         EtaAdapter.eta = nil
         EtaAdapter.distance = nil
         pollManager.etaOriginal = 0.0
