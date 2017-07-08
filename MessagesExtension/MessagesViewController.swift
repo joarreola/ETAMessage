@@ -63,8 +63,9 @@ class MessagesViewController: MSMessagesAppViewController, MKMapViewDelegate, CL
         self.mapView.showsUserLocation = true
         self.mapView.delegate = self
         self.pollManager.messagesVC = self
+
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         //print("-- viewWillAppear ------------------------------------------------")
@@ -336,6 +337,77 @@ class MessagesViewController: MSMessagesAppViewController, MKMapViewDelegate, CL
             // this allows for uploading of coordinates on LocalUser location changes
             // in locationManager()
             self.uploading.enableUploading()
+            
+            // get context
+            // response to host app: ext-app area goes white!?
+            let context = self.extensionContext
+            let inputItems = context?.inputItems
+
+            // responde to host app early
+            context?.completeRequest(returningItems: inputItems) { result in
+                
+                print("-- upload -- context?.completeRequest() -- closure -- result: \(result)")
+            }
+    
+            // Configure the NSURLSesssion
+            let config = URLSessionConfiguration.default
+            config.sharedContainerIdentifier = "edu.ucsc.ETAMessages.SharedContainer"
+
+            //URLSession(configuration: <#T##URLSessionConfiguration#>, delegate: <#T##URLSessionDelegate?#>, delegateQueue: <#T##OperationQueue?#>)
+            let session = URLSession(configuration: config, delegate: self as? URLSessionDelegate, delegateQueue: nil)
+
+            // WorkFlow:
+            //
+            //  URL Instance(url string) -> URLSession -> URLSessionDataTask(url instance, handler)
+            //
+            //      Start data request:
+            //
+            //          dataTask.resume()
+            //
+            //                             |--> handleReceivedData()
+            //          -> responseHandle -
+            //                             |--> reportFailure()
+            //
+            // compose url
+            var index = 0
+            while true {
+                let url = URL(string: "https://itunes.apple.com/us/rss/toppaidapplications/limit=100/json")
+                //let dataTask: URLSessionDataTask = session.dataTask(with: url, completionHandler: responseHandler)
+                let dataTask: URLSessionDataTask = session.dataTask(with: url!) {
+                    (data: Data?, response: URLResponse?, error: Error?) in
+                
+                    if let receivedError = error {
+                    
+                        //reportFailure(message: receivedError.localizedDescription)
+                        print("-- upload -- session.dataTask() -- completionHandler -- receivedError: \(receivedError)")
+                    
+                    } else if let receivedData = data {
+                    
+                        //handleReceivedData(data: receivedData)
+                        print("-- upload -- session.dataTask() -- completionHandler -- receivedData: \(receivedData)")
+                    }
+                }
+
+                dataTask.resume()
+                print("-- upload -- dataTask.resume() -- end time: \(Date.init())")
+                sleep(1)
+                index = index + 1
+                if index > 10 { break }
+            }
+
+            /**
+             * TO KEEP EXT APP ALIVE, DON'T RESPOND TO HOST APP.
+             * DO RESPOND TO TEST CONTAINING APP WAKEUP.
+             *
+            
+            // response to host app: ext-app area goes white!?
+            myExtensinContext?.completeRequest(returningItems: inputItems) { result in
+                
+                print("-- upload -- myExtensinContext?.completeRequest() -- closure -- result: \(result)")
+            }
+            */
+    
+            
         }
         
         // refresh mapView
