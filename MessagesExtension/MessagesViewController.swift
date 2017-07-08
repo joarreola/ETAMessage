@@ -89,6 +89,7 @@ class MessagesViewController: MSMessagesAppViewController, MKMapViewDelegate, CL
         //print("-- willBecomeActive ------------------------------------------------")
         
         print("-- willBecomeActive -- local UUID: \(conversation.localParticipantIdentifier)")
+        print("-- willBecomeActive -- remote UUID: \(conversation.remoteParticipantIdentifiers[0])")
         self.localUUID = conversation.localParticipantIdentifier
         
         // refresh mapView
@@ -159,7 +160,38 @@ class MessagesViewController: MSMessagesAppViewController, MKMapViewDelegate, CL
         // Called before the extension transitions to a new presentation style.
     
         // Use this method to prepare for the change in presentation style.
-        print("-- willTransition to: \(presentationStyle) -------------------------")
+        print("-- willTransition to presentationStyle: \(presentationStyle) -------------------------")
+        
+        guard let conversation = activeConversation else {
+            fatalError("Expected an active conversation")
+        }
+        
+        let controller: UUIDViewController = UUIDViewController()
+        
+        if presentationStyle == .expanded {
+            
+            // recieve side of message in URL
+            guard let message = conversation.selectedMessage else {
+                fatalError("Message not found")
+            }
+            
+            let components = URLComponents(string: (message.url?.absoluteString)!)
+            let queryItem = components?.queryItems?[0]
+            
+            print("-- willBecomeActive -- queryItem?.value: \(String(describing: queryItem?.value!))")
+            
+            controller.messageInUrl = (queryItem?.value)!
+            remoteUUID = UUID(uuidString: (queryItem?.value)!)!
+            
+            print("-- willBecomeActive -- remoteUUID: \(remoteUUID)")
+            
+            controller.viewDidLoad()
+            
+            // start polling if user taps on image
+            print("-- willBecomeActive -- call:self.startPolling()")
+            
+            self.startPolling()
+        }
         
     }
     
@@ -167,7 +199,8 @@ class MessagesViewController: MSMessagesAppViewController, MKMapViewDelegate, CL
         // Called after the extension transitions to a new presentation style.
     
         // Use this method to finalize any behaviors associated with the change in presentation style.
-        print("-- didTransition to: \(presentationStyle) --------------------------")
+        print("-- didTransition to presentationStyle: \(presentationStyle) --------------------------")
+        
     }
     
 
@@ -454,10 +487,12 @@ class MessagesViewController: MSMessagesAppViewController, MKMapViewDelegate, CL
                 
                 // enable in case stationary user moves during or after polling
                 //but not if simulator is running
+                /*
                 if !MobilitySimulator.mobilitySimulatorEnabled {
                     self.locationManager.startUpdatingLocation()
                     self.uploading.enableUploading()
                 }
+                */
             }
             
             // should polling be enabled here or outside self.pollManager.fetchRemote()?
@@ -504,9 +539,10 @@ class MessagesViewController: MSMessagesAppViewController, MKMapViewDelegate, CL
         pollManager.etaOriginal = 0.0
         pollManager.myEta = 0.0
         pollManager.myDistance = 0.0
+        UUIDViewController.uuidIndicator.URLMessage?.text = ""
         
         // cleanup display
-        self.mapUpdate.refreshMapView(packet: localUser.location , mapView: mapView)
+        self.mapUpdate.refreshMapView(packet: localUser.location , mapView: mapView, delta: 0.1)
         
         mapUpdate.displayUpdate(display: display, string: "locationManager...")
         
