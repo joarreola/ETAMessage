@@ -12,6 +12,7 @@ import Messages
 import MapKit
 import CoreLocation
 import UserNotifications
+import CloudKit
 
 
 /// Messages Extension View Controller
@@ -59,7 +60,12 @@ class MessagesViewController: MSMessagesAppViewController, MKMapViewDelegate, CL
         self.locationManager.delegate = self
         self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
         self.locationManager.requestWhenInUseAuthorization()
+        //self.locationManager.requestAlwaysAuthorization()
+        self.locationManager.distanceFilter = kCLDistanceFilterNone
+        self.locationManager.pausesLocationUpdatesAutomatically = false
+        self.locationManager.activityType = CLActivityType.automotiveNavigation
         self.locationManager.startUpdatingLocation()
+
         self.mapView.showsUserLocation = true
         self.mapView.delegate = self
         self.pollManager.messagesVC = self
@@ -91,6 +97,7 @@ class MessagesViewController: MSMessagesAppViewController, MKMapViewDelegate, CL
         
         print("-- willBecomeActive -- local UUID: \(conversation.localParticipantIdentifier)")
         print("-- willBecomeActive -- remote UUID: \(conversation.remoteParticipantIdentifiers[0])")
+
         self.localUUID = conversation.localParticipantIdentifier
         
         // refresh mapView
@@ -111,16 +118,20 @@ class MessagesViewController: MSMessagesAppViewController, MKMapViewDelegate, CL
             print("-- willBecomeActive -- queryItem?.value: \(String(describing: queryItem?.value!))")
             
             controller.messageInUrl = (queryItem?.value)!
-            remoteUUID = UUID(uuidString: (queryItem?.value)!)!
+            self.remoteUUID = UUID(uuidString: (queryItem?.value)!)!
 
             print("-- willBecomeActive -- remoteUUID: \(remoteUUID)")
 
             controller.viewDidLoad()
+
+            // set UserDefaults
+            let mySharedDefaults = UserDefaults.init(suiteName: "group.edu.ucsc.ETAMessages.SharedContainer")
+            mySharedDefaults?.set(self.remoteUUID, forKey: "remoteUUID")
             
             // start polling if user taps on image
             print("-- willBecomeActive -- call:self.startPolling()")
-
             self.startPolling()
+            
         }
     }
     
@@ -161,7 +172,7 @@ class MessagesViewController: MSMessagesAppViewController, MKMapViewDelegate, CL
         // Called before the extension transitions to a new presentation style.
     
         // Use this method to prepare for the change in presentation style.
-        print("-- willTransition to presentationStyle: \(presentationStyle) -------------------------")
+        print("-- willTransition to presentationStyle: \(presentationStyle) ----------")
         
         guard let conversation = activeConversation else {
             fatalError("Expected an active conversation")
@@ -179,19 +190,23 @@ class MessagesViewController: MSMessagesAppViewController, MKMapViewDelegate, CL
             let components = URLComponents(string: (message.url?.absoluteString)!)
             let queryItem = components?.queryItems?[0]
             
-            print("-- willBecomeActive -- queryItem?.value: \(String(describing: queryItem?.value!))")
+            print("-- willTransition -- queryItem?.value: \(String(describing: queryItem?.value!))")
             
             controller.messageInUrl = (queryItem?.value)!
-            remoteUUID = UUID(uuidString: (queryItem?.value)!)!
+            self.remoteUUID = UUID(uuidString: (queryItem?.value)!)!
             
-            print("-- willBecomeActive -- remoteUUID: \(remoteUUID)")
+            print("-- willTransition -- remoteUUID: \(self.remoteUUID)")
             
             controller.viewDidLoad()
-            
+
+            // set UserDefaults
+            let mySharedDefaults = UserDefaults.init(suiteName: "group.edu.ucsc.ETAMessages.SharedContainer")
+            mySharedDefaults?.set(String(describing: self.remoteUUID), forKey: "remoteUUID")
+
             // start polling if user taps on image
-            print("-- willBecomeActive -- call:self.startPolling()")
-            
+            print("-- willTransition -- call:self.startPolling()")
             self.startPolling()
+
         }
         
     }
@@ -343,15 +358,32 @@ class MessagesViewController: MSMessagesAppViewController, MKMapViewDelegate, CL
             let context = self.extensionContext
             let inputItems = context?.inputItems
 
-            // responde to host app early
+            /*
+            // respond to host app early
             context?.completeRequest(returningItems: inputItems) { result in
                 
                 print("-- upload -- context?.completeRequest() -- closure -- result: \(result)")
             }
-    
+            */
+            
+        // MARK: NSURLSesssion
+        /*
             // Configure the NSURLSesssion
             let config = URLSessionConfiguration.default
-            config.sharedContainerIdentifier = "edu.ucsc.ETAMessages.SharedContainer"
+            config.sharedContainerIdentifier = "group.edu.ucsc.ETAMessages.SharedContainer"
+            
+            // NSUserDefaults initWithSuiteName
+            let mySharedDefaults = UserDefaults.init(suiteName: "group.edu.ucsc.ETAMessages.SharedContainer")
+            
+            //mySharedDefaults?.set(<#T##value: Any?##Any?#>, forKey: <#T##String#>)
+            mySharedDefaults?.set(self.localUser.name, forKey: "remoteUUID")
+            print("-- upload -- mySharedDefaults?.set() -- self.localUser.name: \(self.localUser.name)")
+            let uuidObject = mySharedDefaults?.object(forKey: "remoteUUID")
+            print("-- upload -- uuidObject: \(String(describing: uuidObject))")
+            
+            // group container path
+            let fileManager = FileManager()
+            print(fileManager.containerURL(forSecurityApplicationGroupIdentifier: "group.edu.ucsc.ETAMessages.SharedContainer"))
 
             //URLSession(configuration: <#T##URLSessionConfiguration#>, delegate: <#T##URLSessionDelegate?#>, delegateQueue: <#T##OperationQueue?#>)
             let session = URLSession(configuration: config, delegate: self as? URLSessionDelegate, delegateQueue: nil)
@@ -369,31 +401,30 @@ class MessagesViewController: MSMessagesAppViewController, MKMapViewDelegate, CL
             //                             |--> reportFailure()
             //
             // compose url
-            var index = 0
-            while true {
-                let url = URL(string: "https://itunes.apple.com/us/rss/toppaidapplications/limit=100/json")
-                //let dataTask: URLSessionDataTask = session.dataTask(with: url, completionHandler: responseHandler)
-                let dataTask: URLSessionDataTask = session.dataTask(with: url!) {
-                    (data: Data?, response: URLResponse?, error: Error?) in
-                
-                    if let receivedError = error {
-                    
-                        //reportFailure(message: receivedError.localizedDescription)
-                        print("-- upload -- session.dataTask() -- completionHandler -- receivedError: \(receivedError)")
-                    
-                    } else if let receivedData = data {
-                    
-                        //handleReceivedData(data: receivedData)
-                        print("-- upload -- session.dataTask() -- completionHandler -- receivedData: \(receivedData)")
-                    }
-                }
 
-                dataTask.resume()
-                print("-- upload -- dataTask.resume() -- end time: \(Date.init())")
-                sleep(1)
-                index = index + 1
-                if index > 10 { break }
+            let url = URL(string: "https://itunes.apple.com/us/rss/toppaidapplications/limit=100/json")
+            //let dataTask: URLSessionDataTask = session.dataTask(with: url, completionHandler: responseHandler)
+            let dataTask: URLSessionDataTask = session.dataTask(with: url!) {
+                (data: Data?, response: URLResponse?, error: Error?) in
+                
+                if let receivedError = error {
+                    
+                    //reportFailure(message: receivedError.localizedDescription)
+                    print("-- upload -- session.dataTask() -- completionHandler -- receivedError: \(receivedError)")
+                    
+                } else if let receivedData = data {
+                    
+                    //handleReceivedData(data: receivedData)
+                        print("-- upload -- session.dataTask() -- completionHandler -- receivedData: \(receivedData)")
+                }
             }
+            dataTask.resume()
+            print("-- upload -- dataTask.resume() -- end time: \(Date.init())")
+        */
+        // MARK: -
+            
+            // shared container setup
+            //let sharedContainer: CKContainer = CKContainer
 
             /**
              * TO KEEP EXT APP ALIVE, DON'T RESPOND TO HOST APP.
@@ -406,8 +437,6 @@ class MessagesViewController: MSMessagesAppViewController, MKMapViewDelegate, CL
                 print("-- upload -- myExtensinContext?.completeRequest() -- closure -- result: \(result)")
             }
             */
-    
-            
         }
         
         // refresh mapView
