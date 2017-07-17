@@ -47,6 +47,7 @@ class CloudAdapter: UIViewController {
     
     /// Fetch a location record from iCloud. Delete if found, then save.
     /// - Parameters:
+    ///     - userUUID: UUID for remote user (passed in UUID image)
     ///     - whenDone: a closure that takes in a Location parameter
 
     func fetchRecord(userUUID: String, whenDone: @escaping (Location) -> ()) -> () {
@@ -79,7 +80,7 @@ class CloudAdapter: UIViewController {
             }
 
             if let error = error {
-                print("-- CloudAdapter -- fetchRecord(whenDone: @escaping (Location) -> ()) -> ()  -- publicDatabase.fetch() -- closure -- Error: \(locationRecordID): \(error)")
+                print("-- CloudAdapter -- fetchRecord(whenDone: @escaping (Location) -> ()) -> ()  -- publicDatabase.fetch() -- closure -- Error: \(locationRecordID): \(error)\n")
     
                 self.recordFound = false
     
@@ -107,6 +108,8 @@ class CloudAdapter: UIViewController {
     }
 
     /// Delete location record from iCloud
+    /// - Parameters:
+    ///     - userUUID: String representation of a message user's UUID
 
     func deleteRecord(userUUID: String) {
 
@@ -116,12 +119,12 @@ class CloudAdapter: UIViewController {
         let publicDatabase: CKDatabase = myContainer.publicCloudDatabase
 
         publicDatabase.delete(withRecordID: locationRecordID) {
+
             (record, error) in
+
             if let error = error {
                 // Insert error handling
-                print("-- CloudAdapter -- deleteRecord() -- self.publicDatabase.delete() -- closure -- Error: \(locationRecordID): \(error)")
-                
-                return
+                print("-- CloudAdapter -- deleteRecord() -- self.publicDatabase.delete() -- closure -- Error: \(locationRecordID): \(error)\n")
             }
         }
     }
@@ -129,12 +132,15 @@ class CloudAdapter: UIViewController {
 
     /// Upload a location record to iCloud. Delete then save.
     /// - Parameters:
+    ///     - user: a Users instance
     ///     - whenDone: a closure that takes in a Location parameter
 
     func upload(user: Users, whenDone: @escaping (Bool) -> ()) -> () {
 
         // Called by enable() @IBAction function
         
+        var recordToSave: CKRecord
+
         // UI updates on main thread
         DispatchQueue.main.async { [weak self ] in
             
@@ -147,23 +153,41 @@ class CloudAdapter: UIViewController {
         // do here instead
         let locationRecordID: CKRecordID = CKRecordID(recordName: user.name)
         let locationRecord: CKRecord = CKRecord(recordType: "Location", recordID: locationRecordID)
+        locationRecord["Location"] = user.location as? CKRecordValue
+        recordToSave = locationRecord
+
         let myContainer: CKContainer = CKContainer.default()
         let publicDatabase: CKDatabase = myContainer.publicCloudDatabase
 
-        publicDatabase.delete(withRecordID: locationRecordID) {
+        publicDatabase.fetch(withRecordID: locationRecordID) {
+
             (record, error) in
 
             if let error = error {
-                print("-- CloudAdapter -- upload() -- self.publicDatabase.delete -- closure -- Error: \(locationRecordID): \(error)")
+                // filter out "Record not found"
+                print("-- CloudAdapter -- upload() -- publicDatabase.fetch -- closure -- Error: \(locationRecordID): \(error)\n")
 
+                self.recordFound = false
             }
 
-            locationRecord["latitude"]  = user.location.latitude! as CKRecordValue
-            locationRecord["longitude"] = user.location.longitude! as CKRecordValue
+            if record == nil {
+                
+                recordToSave = locationRecord
+                
+            } else {
+                print("-- ContainerApp -- CloudAdapter -- upload() -- publicDatabase.fetch -- closure -- found -- record: \(String(describing: record))\n")
+                
+                self.recordFound = true
+                
+                //record.setObject(aValue, forKey: attributeToChange)
+                record?.setObject(user.location.latitude! as CKRecordValue, forKey: "latitude")
+                record?.setObject(user.location.longitude! as CKRecordValue, forKey: "longitude")
+                
+                recordToSave = record!
+            }
 
-
-            // call save() method while in the delete closure
-            publicDatabase.save(locationRecord) {
+            // call save() method while in the fetch closure
+            publicDatabase.save(recordToSave) {
                 (record, error) in
 
                 // UI updates on main thread
@@ -177,6 +201,7 @@ class CloudAdapter: UIViewController {
 
                 if error != nil {
                     // filter out "Server Record Changed" errors
+                    print("-- ContainerApp -- CloudAdapter -- upload() -- publicDatabase.save -- closure -- Error: \(recordToSave): \(String(describing: error))\n")
 
                     self.recordSaved = false
                     
@@ -190,47 +215,10 @@ class CloudAdapter: UIViewController {
                 self.recordSaved = true
                 
                 // callback to the passed closure
-                
                 whenDone(self.recordSaved)
-                
-        // Mark: add a subscription to get a notification on a record change
-        /*
-                //print("-- CloudAdapter -- upload() -- self.publicDatabase.delete -- closure -- self.publicDatabase.save -- closure -- setup subscription -- RecordId: Oscar-iphone")
-                
-                let locationSubscription = CKQuerySubscription(recordType: "Location", predicate: NSPredicate(format: "TRUEPREDICATE"), options: CKQuerySubscriptionOptions.firesOnRecordCreation)
-                
-                let locationNotificationInfo = CKNotificationInfo()
-                
-                locationNotificationInfo.shouldSendContentAvailable = true
-                
-                locationNotificationInfo.shouldBadge = false
-                
-                locationNotificationInfo.alertBody = "Oscar-ipad updated"
-                
-                locationSubscription.notificationInfo = locationNotificationInfo
-
-                let operation = CKModifySubscriptionsOperation(subscriptionsToSave: [locationSubscription], subscriptionIDsToDelete: [])
-        
-                operation.modifySubscriptionsCompletionBlock = {
-                    
-                    savedSubscriptions, deletedSubscriptionIDs, operationError in
-                    if operationError != nil {
-    
-                        print("-- CloudAdapter -- upload() -- self.publicDatabase.delete -- closure -- error: \(String(describing: operationError))")
-
-                    } else {
-
-                        //print("-- CloudAdapter -- upload() -- self.publicDatabase.delete -- closure -- Subscribed")
-                    }
-                }
-                
-                self.publicDatabase.add(operation)
-        */
-        // MARK:- end
                 
             }
         }
     }
-    
 }
 
