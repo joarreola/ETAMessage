@@ -32,6 +32,13 @@ class UUIDViewController: UIViewController {
         //if UUIDViewController.uuidIndicator.URLMessage != nil {
         if self.messageInUrl != "" {
             UUIDViewController.uuidIndicator.URLMessage?.text = "REMOTE\n" + "\(String(describing: self.messageInUrl))"
+            
+            // set UserDefaults
+            let mySharedDefaults = UserDefaults.init(suiteName: "group.edu.ucsc.ETAMessages.SharedContainer")
+            mySharedDefaults?.set(self.messageInUrl, forKey: "remoteUUID")
+            print("-- UUIDViewController -- mySharedDefaults?.set() -- self.messageInUrl: \(self.messageInUrl)")
+            let uuidObject = mySharedDefaults?.object(forKey: "remoteUUID")
+            print("-- UUIDViewController -- uuidObject: \(String(describing: uuidObject))")
         }
 
     }
