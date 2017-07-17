@@ -38,8 +38,6 @@ class UploadingManager {
     /// - Parameters:
     ///     - packet: location packet to upload to iCloud
     /// - Returns: upload outcome: true or false
-    
-/// MARK: post-comments
 
     func uploadLocation(user: Users, whenDone: @escaping (Bool) -> ()) -> () {
 
@@ -48,8 +46,6 @@ class UploadingManager {
             whenDone(result)
         }
     }
-
-// MARK:-
     
     /// Update display with local location coordinates
     /// - Parameters:
