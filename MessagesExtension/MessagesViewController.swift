@@ -126,7 +126,7 @@ class MessagesViewController: MSMessagesAppViewController, MKMapViewDelegate, CL
 
             // set UserDefaults
             let mySharedDefaults = UserDefaults.init(suiteName: "group.edu.ucsc.ETAMessages.SharedContainer")
-            mySharedDefaults?.set(self.remoteUUID, forKey: "remoteUUID")
+            mySharedDefaults?.set(String(describing: self.remoteUUID), forKey: "remoteUUID")
             
             // start polling if user taps on image
             print("-- willBecomeActive -- call:self.startPolling()")
