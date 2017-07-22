@@ -23,12 +23,12 @@ class PollManager {
     private var latitude: CLLocationDegrees?
     private var longitude: CLLocationDegrees?
     private var remoteFound: Bool = false
-    private let remoteUserName: String
+    public var remoteUserName: String
     private var myLocalPacket: Location
     private var myRemotePacket: Location
     public var myEta: TimeInterval?
     public var myDistance: Double?
-    public var etaOriginal: TimeInterval?
+    public var etaOriginal: TimeInterval? = 0.0
     public let cloudRemote: CloudAdapter
     static  var enabledPolling: Bool = false
     private let hasArrivedEta: Double = 60.0
@@ -86,7 +86,6 @@ class PollManager {
     ///     - localUser: local User instance
     ///     - remotePacket: remote location coordinates
     ///     - mapView: instance of MKMapView to re-center mapView
-    ///     - eta: EtaAdapter instance with eta and distance properties
     ///     - display: UILabel instance display
     
     func pollRemote(localUser: Users, remoteUser: Users, mapView: MKMapView, display: UILabel) {
@@ -108,7 +107,7 @@ class PollManager {
         let queue = DispatchQueue(label: "edu.ucsc.ETAMessages.timer", attributes: .concurrent)
         timer?.cancel()
         timer = DispatchSource.makeTimerSource(queue: queue)
-        timer?.scheduleRepeating(deadline: .now(), interval: .milliseconds(1700))
+        timer?.scheduleRepeating(deadline: .now(), interval: .milliseconds(2000))
         
         timer?.setEventHandler(handler: {
 
@@ -166,6 +165,16 @@ class PollManager {
                                 mapUpdate.refreshMapView(localPacket: (self?.myLocalPacket)!, remotePacket: (self?.myRemotePacket)!, mapView: mapView, eta: true)
                             }
                         }
+                        
+                        // check Userdefaults
+                        let mySharedDefaults = UserDefaults.init(suiteName: "group.edu.ucsc.ETAMessages.SharedContainer")
+                        let UDRemoteUUID = mySharedDefaults?.object(forKey: "remoteUUID")
+                        let UDLatitude = mySharedDefaults?.object(forKey: "latitude")
+                        let UDLongitude = mySharedDefaults?.object(forKey: "longitude")
+                        print("-- PollManager -- pollRemote -- mySharedDefaults: \n\t remoteUUID: \(String(describing: UDRemoteUUID)) \n\t UDLatitude: \(String(describing: UDLatitude)) \n\t longitude: \(String(describing: UDLongitude))\n")
+
+                        print("-- PollManager -- pollRemote -- remotePacket: \(self.myRemotePacket)\n")
+                        
 
                     } // end of location compare
                 } // end of self.fetchRemote()
@@ -188,6 +197,122 @@ class PollManager {
 
     }
 
+    /// Poll UserDefaults for remote User's location record.
+    /// while-loop runs in a background DispatchQueue.global thread.
+    /// MapView updates are done in the DispatchQueue.main thread.
+    /// Call etaNotification() to make local notifications posting
+    ///     requests based on ETA data.
+    /// - Parameters:
+    ///     - localUser: local User instance
+    ///     - remotePacket: remote location coordinates
+    ///     - mapView: instance of MKMapView to re-center mapView
+    ///     - display: UILabel instance display
+    
+    func pollUserDefaults(localUser: Users, remoteUser: Users, mapView: MKMapView, display: UILabel) {
+
+        // initialize to current local and remote postions
+        self.myLocalPacket = Location(userName: localUser.name, location: localUser.location)
+        
+        self.myRemotePacket = Location(userName: remoteUser.name, location: remoteUser.location)
+        
+        let mapUpdate = MapUpdate();
+        
+        // etaOriginal
+        let mySharedDefaults = UserDefaults.init(suiteName: "group.edu.ucsc.ETAMessages.SharedContainer")
+
+        self.etaOriginal = self.etaAdapter.getEta()
+
+
+        let queue = DispatchQueue(label: "edu.ucsc.ETAMessages.timer", attributes: .concurrent)
+        timer?.cancel()
+        timer = DispatchSource.makeTimerSource(queue: queue)
+        timer?.scheduleRepeating(deadline: .now(), interval: .seconds(2))
+        
+        timer?.setEventHandler(handler: {
+            
+            self.myEta = self.etaAdapter.getEta()
+            self.myDistance = self.etaAdapter.getDistance()
+            
+            if self.myEta == nil && self.etaOriginal == nil {
+                self.etaOriginal = 0.0
+            } else if self.etaOriginal == 0.0 && self.myEta != nil {
+                self.etaOriginal = self.myEta
+            }
+            if self.etaOriginal != 0.0 {
+                mySharedDefaults?.set(self.etaOriginal, forKey: "etaOriginal")
+            }
+            else {
+                self.etaOriginal = mySharedDefaults?.double(forKey: "etaOriginal")
+            }
+            print("-- PollManager -- pollUserDefaults() -- etaOriginal: \(String(describing: mySharedDefaults?.double(forKey: "etaOriginal")))\n")
+            print("-- PollManager -- pollUserDefaults() -- self.etaOriginal: \(String(describing: self.etaOriginal))\n")
+            
+            if self.myEta != nil && self.etaOriginal != nil {
+                if self.myEta! != self.etaOriginal!  || Double(self.myEta!) <= self.hasArrivedEta {
+             
+                    self.etaNotification(display: display)
+                }
+             }
+
+            // check UserDefaults
+            //let mySharedDefaults = UserDefaults.init(suiteName: "group.edu.ucsc.ETAMessages.SharedContainer")
+            let UDRemoteUUID = mySharedDefaults?.string(forKey: "remoteUUID")
+
+            let UDLatitude = mySharedDefaults?.double(forKey: "latitude")
+            let CLLatitude = CLLocationDegrees(String(describing: UDLatitude!))
+
+            let UDLongitude = mySharedDefaults?.double(forKey: "longitude")
+            let CLLongitude = CLLocationDegrees(String(describing: UDLongitude!))
+
+            //print("-- PollManager -- pollUserDefaults -- mySharedDefaults: \n\t remoteUUID: \(String(describing: UDRemoteUUID)) \n\t CLLatitude: \(String(describing: CLLatitude)) \n\t CLLongitude: \(String(describing: CLLongitude))\n")
+
+            if Double(String(describing: UDLatitude)) != self.myRemotePacket.latitude ||
+                Double(String(describing:UDLongitude)) != self.myRemotePacket.longitude ||
+                localUser.location.latitude != self.myLocalPacket.latitude ||
+                localUser.location.longitude != self.myLocalPacket.longitude
+            {
+                    
+                // update myRemotePacket and myLocalPacket
+                self.myRemotePacket.setLocation(latitude: CLLatitude, longitude:  CLLongitude)
+                    
+                self.myLocalPacket.setLocation(latitude: localUser.location.latitude, longitude: localUser.location.longitude)
+                    
+                self.etaAdapter.getEtaDistance(localPacket: self.myLocalPacket, remotePacket: self.myRemotePacket, mapView: mapView, display: display,  etaOriginal: self.etaOriginal!)
+                    
+                // UI updates on main thread
+                DispatchQueue.main.async { [weak self ] in
+                        
+                    if self != nil {
+                            
+                        mapUpdate.displayUpdate(display: display, localPacket: self!.myLocalPacket, remotePacket: self!.myRemotePacket, eta: true)
+                            
+                        mapUpdate.addPin(packet: (self?.myRemotePacket)!, mapView: mapView, remove: false)
+                            
+                        mapUpdate.refreshMapView(localPacket: (self?.myLocalPacket)!, remotePacket: (self?.myRemotePacket)!, mapView: mapView, eta: true)
+                    }
+                }
+                    
+            } // end of location compare
+            
+            // ETA == has-arrived, cancel timer
+            if self.myEta != nil {
+                
+                if (Double(self.myEta!) <= self.hasArrivedEta) || !PollManager.enabledPolling {
+                    
+                    self.timer?.cancel()
+                    
+                    UploadingManager.enabledUploading = false
+                    
+                    mySharedDefaults?.set(0.0, forKey: "etaOriginal")
+                }
+            }
+            
+        }) //  end of timer?.setEventHandler(handler)
+        
+        self.timer?.resume()
+        
+    }
+
     /// Request local notifications based on ETA data
     /// - Parameters:
     ///     - display: UILabel instance display
@@ -200,58 +325,96 @@ class PollManager {
         switch self.myEta! {
         case (self.etaOriginal! / 4) * 3:
 
-            //print("/n=====================================================================/n")
-            //print("-- PollManager -- etaNotification -- myEta == etaOriginal/4 * 3")
-            //print("/n=====================================================================/n")
+            print("/n=====================================================================")
+            print("-- PollManager -- etaNotification -- myEta == etaOriginal/4 * 3")
+            print("=====================================================================/n")
             
             // do UI updates in the main thread
             OperationQueue.main.addOperation() {
                 
                 mapUpdate.displayUpdate(display: display, localPacket: self.myLocalPacket, remotePacket: self.myRemotePacket, string: "eta:\t\t\((self.myEta!)) sec", secondString: "3/4ths there")
+                
+                // do an alert
+                let alert = UIAlertView()
+                alert.title = "ETAMessage"
+                alert.message = "\(self.remoteUserName) 3/4ths THERE"
+                alert.addButton(withTitle: "OK")
+                alert.show()
             }
+            /*
             setupLocalNotification(message: (self.remoteUserName) + " Will arrive in \(self.myEta!) sec")
             setupPseudoLocalNotification(message: (self.remoteUserName) + " Will arrive in \(self.myEta!) sec")
-    
+            */
+            
+
         case (self.etaOriginal! / 4) * 2:
             
-            //print("/n=====================================================================/n")
-            //print("-- PollManager -- etaNotification() -- myEta == etaOriginal/4 * 2")
-            //print("/n=====================================================================/n")
+            print("/n=====================================================================")
+            print("-- PollManager -- etaNotification() -- myEta == etaOriginal/4 * 2")
+            print("=====================================================================/n")
             
             // do UI updates in the main thread
             OperationQueue.main.addOperation() {
                 
                 mapUpdate.displayUpdate(display: display, localPacket: self.myLocalPacket, remotePacket: self.myRemotePacket, string: "eta:\t\t\((self.myEta!)) sec", secondString: "Half-way there")
+                
+                // do an alert
+                let alert = UIAlertView()
+                alert.title = "ETAMessage"
+                alert.message = "\(self.remoteUserName) HALF-WAY THERE"
+                alert.addButton(withTitle: "OK")
+                alert.show()
             }
+            /*
             setupLocalNotification(message: (self.remoteUserName) + " Will arrive in \(self.myEta!) sec")
             setupPseudoLocalNotification(message: (self.remoteUserName) + " Will arrive in \(self.myEta!) sec")
+            */
             
+
         case (self.etaOriginal! / 4) * 1:
             
-            //print("/n=====================================================================/n")
-            //print("-- PollManager -- etaNotification() -- myEta == etaOriginal/4 * 1")
-            //print("/n=====================================================================/n")
+            print("/n=====================================================================")
+            print("-- PollManager -- etaNotification() -- myEta == etaOriginal/4 * 1")
+            print("=====================================================================/n")
             
             // do UI updates in the main thread
             OperationQueue.main.addOperation() {
                 mapUpdate.displayUpdate(display: display, localPacket: self.myLocalPacket, remotePacket: self.myRemotePacket, string: "eta:\t\t\((self.myEta!)) sec", secondString: "1/4th there")
+                
+                // do an alert
+                let alert = UIAlertView()
+                alert.title = "ETAMessage"
+                alert.message = "\(self.remoteUserName) 1/4 THERE"
+                alert.addButton(withTitle: "OK")
+                alert.show()
             }
+            /*
             setupLocalNotification(message: (self.remoteUserName) + " Will arrive in \(self.myEta!) sec")
             setupPseudoLocalNotification(message: (self.remoteUserName) + " Will arrive in \(self.myEta!) sec")
+            */
             
+
         case 0.0...self.hasArrivedEta:
 
-            //print("/n=====================================================================/n")
-            //print("-- PollManager -- etaNotification() -- myEta == 0")
-            //print("/n=====================================================================/n")
+            print("/n=====================================================================")
+            print("-- PollManager -- etaNotification() -- myEta == 0")
+            print("=====================================================================/n")
             
             // do UI updates in the main thread
             OperationQueue.main.addOperation() {
                 
                 mapUpdate.displayUpdate(display: display, localPacket: self.myLocalPacket, remotePacket: self.myRemotePacket, string: "eta:\t\t\((self.myEta!)) sec", secondString: "\(self.remoteUserName) Has arrived")
                 
+                // do an alert
+                let alert = UIAlertView()
+                alert.title = "ETAMessage"
+                alert.message = "\(self.remoteUserName) HAS ARRIVED"
+                alert.addButton(withTitle: "OK")
+                alert.show()
+                
             }
-            
+
+            /*
             // MARK: local notification
 
             setupLocalNotification(message: (self.remoteUserName) + " Has arrived")
@@ -263,6 +426,7 @@ class PollManager {
             setupPseudoLocalNotification(message: (self.remoteUserName) + " Has arrived")
             
             // MARK:-
+            */
             
             
         default: break
