@@ -56,12 +56,11 @@ class EtaAdapter: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         //print("-- EtaAdapter -- viewDidAppear ------------------------------------")
-        
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillAppear(animated)
         //print("-- EtaAdapter -- viewWillDisappear --------------------------------")
-        
+
     }
     override func viewDidDisappear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -159,7 +158,7 @@ class EtaAdapter: UIViewController {
             // can't get self.eta nor self.distance out of the closure on 1st poll
             guard let unwrappedResponse = response else {
                 
-                print("-- EtaAdapter -- getEtaDistance() -- mkDirections.calculate() -- closire -- unwrappedResponse -- Error: \(String(describing: error))")
+                print("-- EtaAdapter -- getEtaDistance() -- mkDirections.calculate() -- closure -- unwrappedResponse -- Error: \(String(describing: error))")
                 
                 EtaAdapter.eta = nil
                 EtaAdapter.distance = nil
