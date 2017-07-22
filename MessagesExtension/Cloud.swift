@@ -165,7 +165,7 @@ class CloudAdapter: UIViewController {
 
             if let error = error {
                 // filter out "Record not found"
-                print("-- CloudAdapter -- upload() -- publicDatabase.fetch -- closure -- Error: \(locationRecordID): \(error)\n")
+                print("-- upload() -- publicDatabase.fetch -- closure -- Error: \(locationRecordID): \(error)\n")
 
                 self.recordFound = false
             }
@@ -175,7 +175,7 @@ class CloudAdapter: UIViewController {
                 recordToSave = locationRecord
                 
             } else {
-                print("-- ContainerApp -- CloudAdapter -- upload() -- publicDatabase.fetch -- closure -- found -- record: \(String(describing: record))\n")
+                print("-- CloudAdapter -- upload() -- publicDatabase.fetch -- closure -- found -- record: \(String(describing: record))\n")
                 
                 self.recordFound = true
                 
@@ -201,7 +201,7 @@ class CloudAdapter: UIViewController {
 
                 if error != nil {
                     // filter out "Server Record Changed" errors
-                    print("-- ContainerApp -- CloudAdapter -- upload() -- publicDatabase.save -- closure -- Error: \(recordToSave): \(String(describing: error))\n")
+                    print("-- CloudAdapter -- upload() -- publicDatabase.save -- closure -- Error: \(recordToSave): \(String(describing: error))\n")
 
                     self.recordSaved = false
                     
@@ -211,6 +211,7 @@ class CloudAdapter: UIViewController {
 
                     return
                 }
+                print("-- CloudAdapter -- upload() -- publicDatabase.save -- record saved: \(String(describing: record))")
 
                 self.recordSaved = true
                 
