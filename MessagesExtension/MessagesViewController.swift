@@ -52,10 +52,11 @@ class MessagesViewController: MSMessagesAppViewController, MKMapViewDelegate, CL
     var localUUID: UUID = UUID(uuidString: "49B5E9E4-967F-4CD4-BCD7-B3439715EE58")!
     var remoteUUID: UUID = UUID(uuidString: "49B5E9E4-967F-4CD4-BCD7-B3439715EE58")!
 
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        print("-- viewDidLoad -----------------------------------------------------")
+        print("-- viewDidLoad ---------------------------------------------------------")
         
         self.locationManager.delegate = self
         self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
@@ -63,7 +64,8 @@ class MessagesViewController: MSMessagesAppViewController, MKMapViewDelegate, CL
         //self.locationManager.requestAlwaysAuthorization()
         self.locationManager.distanceFilter = kCLDistanceFilterNone
         self.locationManager.pausesLocationUpdatesAutomatically = false
-        self.locationManager.activityType = CLActivityType.automotiveNavigation
+        //self.locationManager.activityType = CLActivityType.automotiveNavigation
+        self.locationManager.activityType = CLActivityType.fitness
         self.locationManager.startUpdatingLocation()
 
         self.mapView.showsUserLocation = true
@@ -74,7 +76,25 @@ class MessagesViewController: MSMessagesAppViewController, MKMapViewDelegate, CL
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        //print("-- viewWillAppear ------------------------------------------------")
+        print("-- viewWillAppear -------------------------------------------------------")
+        
+        // last called during startup, check UserDefaults here
+        let mySharedDefaults = UserDefaults.init(suiteName: "group.edu.ucsc.ETAMessages.SharedContainer")
+        if (mySharedDefaults?.bool(forKey: "enabledPolling"))! {
+            print("-- viewWillAppear -- continue polling ------------------------------\n")
+            // continue polling
+
+            print("-- viewWillAppear -- continue polling -- etaOriginal: \(String(describing: mySharedDefaults?.double(forKey: "etaOriginal")))\n")
+
+            self.pollManager.pollUserDefaults(localUser: self.localUser, remoteUser: self.remoteUser, mapView: self.mapView, display: self.display)
+
+            self.pollManager.enablePolling()
+        }
+
+        //mySharedDefaults?.bool(forKey: "mobilitySimulatorEnabled")
+        //mySharedDefaults?.bool(forKey: "enabledUploading")
+        //mySharedDefaults?.bool(forKey: "startUpdatingLocation")
+        //mySharedDefaults?.string(forKey: "remoteUUID")
 
     }
 
@@ -82,7 +102,7 @@ class MessagesViewController: MSMessagesAppViewController, MKMapViewDelegate, CL
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-        //print("-- didReceiveMemoryWarning ------------------------------------------------")
+        print("-- didReceiveMemoryWarning ----------------------------------------------")
     }
     
     // MARK: - Conversation Handling
@@ -93,7 +113,7 @@ class MessagesViewController: MSMessagesAppViewController, MKMapViewDelegate, CL
         // This will happen when the extension is about to present UI.
         
         // Use this method to configure the extension and restore previously stored state.
-        //print("-- willBecomeActive ------------------------------------------------")
+        print("-- willBecomeActive -----------------------------------------------------")
         
         print("-- willBecomeActive -- local UUID: \(conversation.localParticipantIdentifier)")
         print("-- willBecomeActive -- remote UUID: \(conversation.remoteParticipantIdentifiers[0])")
@@ -119,6 +139,7 @@ class MessagesViewController: MSMessagesAppViewController, MKMapViewDelegate, CL
             
             controller.messageInUrl = (queryItem?.value)!
             self.remoteUUID = UUID(uuidString: (queryItem?.value)!)!
+            pollManager.remoteUserName = String(describing: self.remoteUUID)
 
             print("-- willBecomeActive -- remoteUUID: \(remoteUUID)")
 
@@ -145,7 +166,7 @@ class MessagesViewController: MSMessagesAppViewController, MKMapViewDelegate, CL
         // Use this method to release shared resources, save user data, invalidate timers,
         // and store enough state information to restore your extension to its current state
         // in case it is terminated later.
-        print("-- didResignActive -------------------------------------------------")
+        print("-- didResignActive -------------------------------------------------------")
     }
    
     override func didReceive(_ message: MSMessage, conversation: MSConversation) {
@@ -153,26 +174,26 @@ class MessagesViewController: MSMessagesAppViewController, MKMapViewDelegate, CL
         // extension on a remote device.
         
         // Use this method to trigger UI updates in response to the message.
-        print("-- didReceive ------------------------------------------------------")
+        print("-- didReceive ------------------------------------------------------------")
     }
     
     override func didStartSending(_ message: MSMessage, conversation: MSConversation) {
         // Called when the user taps the send button.
-        print("-- didStartSending -------------------------------------------------")
+        print("-- didStartSending -------------------------------------------------------")
     }
     
     override func didCancelSending(_ message: MSMessage, conversation: MSConversation) {
         // Called when the user deletes the message without sending it.
     
         // Use this to clean up state related to the deleted message.
-        print("-- didCancelSending ------------------------------------------------")
+        print("-- didCancelSending ------------------------------------------------------")
     }
     
     override func willTransition(to presentationStyle: MSMessagesAppPresentationStyle) {
         // Called before the extension transitions to a new presentation style.
     
         // Use this method to prepare for the change in presentation style.
-        print("-- willTransition to presentationStyle: \(presentationStyle) ----------")
+        print("-- willTransition to presentationStyle: \(presentationStyle) -------------")
         
         guard let conversation = activeConversation else {
             fatalError("Expected an active conversation")
@@ -194,6 +215,7 @@ class MessagesViewController: MSMessagesAppViewController, MKMapViewDelegate, CL
             
             controller.messageInUrl = (queryItem?.value)!
             self.remoteUUID = UUID(uuidString: (queryItem?.value)!)!
+            pollManager.remoteUserName = String(describing: self.remoteUUID)
             
             print("-- willTransition -- remoteUUID: \(self.remoteUUID)")
             
@@ -215,7 +237,7 @@ class MessagesViewController: MSMessagesAppViewController, MKMapViewDelegate, CL
         // Called after the extension transitions to a new presentation style.
     
         // Use this method to finalize any behaviors associated with the change in presentation style.
-        print("-- didTransition to presentationStyle: \(presentationStyle) --------------------------")
+        print("-- didTransition to presentationStyle: \(presentationStyle) --------------")
         
     }
     
@@ -313,6 +335,9 @@ class MessagesViewController: MSMessagesAppViewController, MKMapViewDelegate, CL
         // reenable in case disabled
         self.locationManager.startUpdatingLocation()
         
+        let mySharedDefaults = UserDefaults.init(suiteName: "group.edu.ucsc.ETAMessages.SharedContainer")
+        mySharedDefaults?.set(true, forKey: "startUpdatingLocation")
+
         // UUID
         addImage()
 
@@ -352,6 +377,10 @@ class MessagesViewController: MSMessagesAppViewController, MKMapViewDelegate, CL
             // this allows for uploading of coordinates on LocalUser location changes
             // in locationManager()
             self.uploading.enableUploading()
+            
+            // set enabledUploading for app restart
+            let mySharedDefaults = UserDefaults.init(suiteName: "group.edu.ucsc.ETAMessages.SharedContainer")
+            mySharedDefaults?.set(true, forKey: "enabledUploading")
             
             // get context
             // response to host app: ext-app area goes white!?
@@ -512,6 +541,10 @@ class MessagesViewController: MSMessagesAppViewController, MKMapViewDelegate, CL
 
             mobilitySimulator.startMobilitySimulator(user: localUser, display: display, mapView: mapView, remote: false)
         }
+        
+        // set enabledUploading for app restart
+        let mySharedDefaults = UserDefaults.init(suiteName: "group.edu.ucsc.ETAMessages.SharedContainer")
+        mySharedDefaults?.set(true, forKey: "mobilitySimulatorEnabled")
     }
 
     /**
@@ -531,7 +564,7 @@ class MessagesViewController: MSMessagesAppViewController, MKMapViewDelegate, CL
         // display localUserPacket
         self.mapUpdate.displayUpdate(display: self.display, packet: self.localUser.location)
         
-        // initialize vars for proper restart with a pol retap
+        // initialize vars for proper restart with a Fetch retap
         pollManager.disablePolling()
         EtaAdapter.eta = nil
         EtaAdapter.distance = nil
@@ -574,6 +607,11 @@ class MessagesViewController: MSMessagesAppViewController, MKMapViewDelegate, CL
                 // update remoteUser Location
                 self.remoteUser.location.setLocation(latitude: packet.latitude!, longitude: packet.longitude!)
                 
+                // also for UserDefaults
+                let mySharedDefaults = UserDefaults.init(suiteName: "group.edu.ucsc.ETAMessages.SharedContainer")
+                mySharedDefaults?.set(String(describing: packet.latitude!), forKey: "latitude")
+                mySharedDefaults?.set(String(describing: packet.longitude!), forKey: "longitude")
+                
                 // UI updates on main thread
                 DispatchQueue.main.async { [weak self ] in
                     
@@ -583,8 +621,9 @@ class MessagesViewController: MSMessagesAppViewController, MKMapViewDelegate, CL
                     }
                 }
 
-                self.pollManager.pollRemote(localUser: self.localUser, remoteUser: self.remoteUser, mapView: self.mapView, display: self.display)
-                
+                //self.pollManager.pollRemote(localUser: self.localUser, remoteUser: self.remoteUser, mapView: self.mapView, display: self.display)
+
+                self.pollManager.pollUserDefaults(localUser: self.localUser, remoteUser: self.remoteUser,  mapView: self.mapView, display: self.display)
                 
                 // enable in case stationary user moves during or after polling
                 //but not if simulator is running
@@ -598,6 +637,10 @@ class MessagesViewController: MSMessagesAppViewController, MKMapViewDelegate, CL
             
             // should polling be enabled here or outside self.pollManager.fetchRemote()?
             self.pollManager.enablePolling()
+            
+            // note in UserDefalts
+            let mySharedDefaults = UserDefaults.init(suiteName: "group.edu.ucsc.ETAMessages.SharedContainer")
+            mySharedDefaults?.set(true, forKey: "enabledPolling")
         }
     }
   
@@ -641,6 +684,14 @@ class MessagesViewController: MSMessagesAppViewController, MKMapViewDelegate, CL
         pollManager.myEta = 0.0
         pollManager.myDistance = 0.0
         UUIDViewController.uuidIndicator.URLMessage?.text = ""
+        
+        // reset UserDefaults
+        let mySharedDefaults = UserDefaults.init(suiteName: "group.edu.ucsc.ETAMessages.SharedContainer")
+        mySharedDefaults?.set(false, forKey: "enabledPolling")
+        mySharedDefaults?.set(false, forKey: "mobilitySimulatorEnabled")
+        mySharedDefaults?.set(false, forKey: "enabledUploading")
+        mySharedDefaults?.set(false, forKey: "startUpdatingLocation")
+        mySharedDefaults?.set(0.0, forKey: "etaOriginal")
         
         // cleanup display
         self.mapUpdate.refreshMapView(packet: localUser.location , mapView: mapView, delta: 0.1)
