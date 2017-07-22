@@ -32,14 +32,12 @@ class MobilitySimulator {
 
         MobilitySimulator.mobilitySimulatorEnabled = true
         UploadingManager.enabledUploading = false
-        
-        // move user away from (ex):
-        //  37.340,128,049,289,19
-        //-122.033,242,313,304,92
-        
+
         // subtract 0.20 from longitude
         self.origLocation.latitude = user.location.latitude!
         self.origLocation.longitude = user.location.longitude!
+
+        self.mapUpdate.displayUpdate(display: display, localPacket: self.origLocation, remotePacket: self.origLocation, string: "Simulation: Active")
 
         tempUser = Users(name: user.name)
         //tempUser.location.latitude = user.location.latitude! + deltaLatitude
@@ -49,6 +47,21 @@ class MobilitySimulator {
         
         // update localUser location
         user.location.longitude = user.location.longitude! - deltaLongitude
+        self.gpsLocation.uploadToIcloud(user: self.tempUser)  {
+            
+            (result: Bool) in
+            print("-- MobilitySimulator -- self.gpsLocation.uploadToIcloud(user: self.tempUser) -- result: \(result)\n")
+            
+            // UI updates on main thread
+            DispatchQueue.main.async { [weak self ] in
+                
+                if self != nil {
+
+                    self?.mapUpdate.displayUpdate(display: display, localPacket: (self?.origLocation)!, remotePacket: (self?.tempUser.location)!, string: "Simulation: Active")
+    
+                }
+            }
+        }
 
         /**
          *
@@ -59,9 +72,11 @@ class MobilitySimulator {
         let queue = DispatchQueue(label: "edu.ucsc.ETAMessages.timer", attributes: .concurrent)
         timer?.cancel()
         timer = DispatchSource.makeTimerSource(queue: queue)
-        timer?.scheduleRepeating(deadline: .now(), interval: .seconds(2))
+        timer?.scheduleRepeating(deadline: .now(), interval: .seconds(10))
 
         timer?.setEventHandler(handler: {
+
+            print("-- MobilitySimulator -- call: self.gpsLocation.uploadToIcloud(user: self.tempUser) -- self.tempUser: \(self.tempUser)\n")
 
             self.gpsLocation.uploadToIcloud(user: self.tempUser) {
 
@@ -74,9 +89,10 @@ class MobilitySimulator {
                         
                         if self != nil && !PollManager.enabledPolling {
                             
-                            self?.mapUpdate.displayUpdate(display: display, packet: (self?.tempUser.location)!, string: "upload to iCloud failed")
+                           
+                            self?.mapUpdate.displayUpdate(display: display, localPacket: (self?.origLocation)!, remotePacket: (self?.tempUser.location)!, string: "Simulation: upload to iCloud failed")
                             
-                            //self?.mapUpdate.refreshMapView(packet: (self?.tempUser.location)!, mapView: mapView)
+                            self?.mapUpdate.refreshMapView(packet: (self?.tempUser.location)!, mapView: mapView)
                             
                         }
                     }
@@ -87,8 +103,9 @@ class MobilitySimulator {
                     DispatchQueue.main.async { [weak self ] in
                         
                         if self != nil && !PollManager.enabledPolling {
-                            
-                            self?.mapUpdate.displayUpdate(display: display, packet: (self?.tempUser.location)!, string: "uploaded to iCloud")
+                            print("-- MobilitySimulator -- call self?.mapUpdate.displayUpdate() -- self?.tempUser.location: \(String(describing: self?.tempUser.location))\n")
+
+                            self?.mapUpdate.displayUpdate(display: display, localPacket: (self?.origLocation)!, remotePacket: (self?.tempUser.location)!, string: "Simulation: uploaded to iCloud")
                             
                             self?.mapUpdate.refreshMapView(packet: (self?.tempUser.location)!, mapView: mapView)
 
@@ -120,11 +137,14 @@ class MobilitySimulator {
 
                             if self != nil && !PollManager.enabledPolling {
 
-                                self?.mapUpdate.displayUpdate(display: display, packet: (self?.tempUser.location)!, string: "Simulation Completed")
+                                self?.mapUpdate.displayUpdate(display: display, localPacket: (self?.origLocation)!, remotePacket: (self?.tempUser.location)!, string: "Simulation: completed")
                             }
                         }
 
                         MobilitySimulator.mobilitySimulatorEnabled = false
+                        
+                        let mySharedDefaults = UserDefaults.init(suiteName: "group.edu.ucsc.ETAMessages.SharedContainer")
+                        mySharedDefaults?.set(false, forKey: "mobilitySimulatorEnabled")
                     }
                 }
             }
