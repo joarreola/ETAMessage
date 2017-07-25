@@ -37,12 +37,12 @@ class CloudAdapter: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        //print("-- EtaAdapter -- viewDidLoad() -----------------------------")
+        print("-- CloudAdapter -- viewDidLoad() -----------------------------")
 
         // to hold progress and label
         CloudAdapter.cloudIndicator.fetchActivity = self.fetchActivity
         CloudAdapter.cloudIndicator.uploadActivity = self.uploadActivity
-        
+
     }
     
     /// Fetch a location record from iCloud. Delete if found, then save.
