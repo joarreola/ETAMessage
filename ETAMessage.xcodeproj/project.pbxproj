@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DF6B28421F1195F900DADC13 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6B283F1F1195F900DADC13 /* Location.swift */; };
+		DF6B28431F1195F900DADC13 /* MapUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6B28401F1195F900DADC13 /* MapUpdate.swift */; };
+		DF6B28441F1195F900DADC13 /* Users.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6B28411F1195F900DADC13 /* Users.swift */; };
+		DF6B28461F11972A00DADC13 /* Uploading.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6B28451F11972A00DADC13 /* Uploading.swift */; };
+		DF6B28481F11975600DADC13 /* Cloud.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6B28471F11975600DADC13 /* Cloud.swift */; };
+		DF6B284A1F11978000DADC13 /* GPSLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6B28491F11978000DADC13 /* GPSLocation.swift */; };
 		DF7DE3EC1F0EBABE00F62FC2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF7DE3EB1F0EBABE00F62FC2 /* AppDelegate.swift */; };
 		DF7DE3EE1F0EBABE00F62FC2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF7DE3ED1F0EBABE00F62FC2 /* ViewController.swift */; };
 		DF7DE3F11F0EBABE00F62FC2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DF7DE3EF1F0EBABE00F62FC2 /* Main.storyboard */; };
@@ -21,10 +27,6 @@
 		DF7DE4301F0EBAED00F62FC2 /* MessagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF7DE42F1F0EBAED00F62FC2 /* MessagesViewController.swift */; };
 		DF7DE4331F0EBAED00F62FC2 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DF7DE4311F0EBAED00F62FC2 /* MainInterface.storyboard */; };
 		DF7DE4351F0EBAED00F62FC2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DF7DE4341F0EBAED00F62FC2 /* Assets.xcassets */; };
-		DF7DE4401F0EBB0600F62FC2 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF7DE43F1F0EBB0600F62FC2 /* CloudKit.framework */; };
-		DF7DE4421F0EBB1300F62FC2 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF7DE4411F0EBB1300F62FC2 /* MapKit.framework */; };
-		DF7DE4441F0EBB4000F62FC2 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF7DE43F1F0EBB0600F62FC2 /* CloudKit.framework */; };
-		DF7DE4451F0EBB4800F62FC2 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF7DE4411F0EBB1300F62FC2 /* MapKit.framework */; };
 		DF7DE46F1F0EBDA900F62FC2 /* Cloud.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF7DE4621F0EBDA900F62FC2 /* Cloud.swift */; };
 		DF7DE4701F0EBDA900F62FC2 /* Eta.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF7DE4631F0EBDA900F62FC2 /* Eta.swift */; };
 		DF7DE4711F0EBDA900F62FC2 /* EtaNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF7DE4641F0EBDA900F62FC2 /* EtaNotifications.swift */; };
@@ -38,6 +40,8 @@
 		DF7DE4791F0EBDA900F62FC2 /* Uploading.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF7DE46C1F0EBDA900F62FC2 /* Uploading.swift */; };
 		DF7DE47A1F0EBDA900F62FC2 /* Users.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF7DE46D1F0EBDA900F62FC2 /* Users.swift */; };
 		DF7DE47B1F0EBDA900F62FC2 /* UUIDViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF7DE46E1F0EBDA900F62FC2 /* UUIDViewController.swift */; };
+		DF8D89851F19821700FC57F0 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF8D89841F19821700FC57F0 /* CloudKit.framework */; };
+		DF8D89871F19823C00FC57F0 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF8D89861F19823C00FC57F0 /* MapKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +83,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		DF6B283F1F1195F900DADC13 /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
+		DF6B28401F1195F900DADC13 /* MapUpdate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapUpdate.swift; sourceTree = "<group>"; };
+		DF6B28411F1195F900DADC13 /* Users.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Users.swift; sourceTree = "<group>"; };
+		DF6B28451F11972A00DADC13 /* Uploading.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Uploading.swift; sourceTree = "<group>"; };
+		DF6B28471F11975600DADC13 /* Cloud.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cloud.swift; sourceTree = "<group>"; };
+		DF6B28491F11978000DADC13 /* GPSLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GPSLocation.swift; sourceTree = "<group>"; };
 		DF7DE3E81F0EBABE00F62FC2 /* ETAMessage.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ETAMessage.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF7DE3EB1F0EBABE00F62FC2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DF7DE3ED1F0EBABE00F62FC2 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -103,8 +113,6 @@
 		DF7DE4341F0EBAED00F62FC2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DF7DE4361F0EBAED00F62FC2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DF7DE43E1F0EBB0300F62FC2 /* MessagesExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MessagesExtension.entitlements; sourceTree = "<group>"; };
-		DF7DE43F1F0EBB0600F62FC2 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
-		DF7DE4411F0EBB1300F62FC2 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		DF7DE4431F0EBB3D00F62FC2 /* ETAMessage.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ETAMessage.entitlements; sourceTree = "<group>"; };
 		DF7DE4621F0EBDA900F62FC2 /* Cloud.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cloud.swift; sourceTree = "<group>"; };
 		DF7DE4631F0EBDA900F62FC2 /* Eta.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Eta.swift; sourceTree = "<group>"; };
@@ -119,6 +127,8 @@
 		DF7DE46C1F0EBDA900F62FC2 /* Uploading.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Uploading.swift; sourceTree = "<group>"; };
 		DF7DE46D1F0EBDA900F62FC2 /* Users.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Users.swift; sourceTree = "<group>"; };
 		DF7DE46E1F0EBDA900F62FC2 /* UUIDViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UUIDViewController.swift; sourceTree = "<group>"; };
+		DF8D89841F19821700FC57F0 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		DF8D89861F19823C00FC57F0 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,8 +136,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DF7DE4451F0EBB4800F62FC2 /* MapKit.framework in Frameworks */,
-				DF7DE4441F0EBB4000F62FC2 /* CloudKit.framework in Frameworks */,
+				DF8D89871F19823C00FC57F0 /* MapKit.framework in Frameworks */,
+				DF8D89851F19821700FC57F0 /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -150,8 +160,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				DF7DE42D1F0EBAED00F62FC2 /* Messages.framework in Frameworks */,
-				DF7DE4421F0EBB1300F62FC2 /* MapKit.framework in Frameworks */,
-				DF7DE4401F0EBB0600F62FC2 /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -186,6 +194,12 @@
 		DF7DE3EA1F0EBABE00F62FC2 /* ETAMessage */ = {
 			isa = PBXGroup;
 			children = (
+				DF6B28491F11978000DADC13 /* GPSLocation.swift */,
+				DF6B28471F11975600DADC13 /* Cloud.swift */,
+				DF6B28451F11972A00DADC13 /* Uploading.swift */,
+				DF6B283F1F1195F900DADC13 /* Location.swift */,
+				DF6B28401F1195F900DADC13 /* MapUpdate.swift */,
+				DF6B28411F1195F900DADC13 /* Users.swift */,
 				DF7DE4431F0EBB3D00F62FC2 /* ETAMessage.entitlements */,
 				DF7DE3EB1F0EBABE00F62FC2 /* AppDelegate.swift */,
 				DF7DE3ED1F0EBABE00F62FC2 /* ViewController.swift */,
@@ -228,8 +242,8 @@
 		DF7DE42B1F0EBAED00F62FC2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				DF7DE4411F0EBB1300F62FC2 /* MapKit.framework */,
-				DF7DE43F1F0EBB0600F62FC2 /* CloudKit.framework */,
+				DF8D89861F19823C00FC57F0 /* MapKit.framework */,
+				DF8D89841F19821700FC57F0 /* CloudKit.framework */,
 				DF7DE42C1F0EBAED00F62FC2 /* Messages.framework */,
 			);
 			name = Frameworks;
@@ -491,9 +505,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DF6B284A1F11978000DADC13 /* GPSLocation.swift in Sources */,
 				DF7DE3EE1F0EBABE00F62FC2 /* ViewController.swift in Sources */,
 				DF7DE3F41F0EBABE00F62FC2 /* ETAMessage.xcdatamodeld in Sources */,
+				DF6B28421F1195F900DADC13 /* Location.swift in Sources */,
+				DF6B28461F11972A00DADC13 /* Uploading.swift in Sources */,
 				DF7DE3EC1F0EBABE00F62FC2 /* AppDelegate.swift in Sources */,
+				DF6B28481F11975600DADC13 /* Cloud.swift in Sources */,
+				DF6B28441F1195F900DADC13 /* Users.swift in Sources */,
+				DF6B28431F1195F900DADC13 /* MapUpdate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -682,11 +702,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = ETAMessage/ETAMessage.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = J5W47NE3WW;
 				INFOPLIST_FILE = ETAMessage/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = edu.ucsc.ETAMessage;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -696,11 +719,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = ETAMessage/ETAMessage.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = J5W47NE3WW;
 				INFOPLIST_FILE = ETAMessage/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = edu.ucsc.ETAMessage;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
