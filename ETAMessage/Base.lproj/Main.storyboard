@@ -1,14 +1,18 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11134" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11106"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="ETAMessage" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -16,11 +20,89 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="vwi-Rh-fo2">
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                            </mapView>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="y3u-c8-uc5">
+                                <rect key="frame" x="0.0" y="20" width="375" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="MrO-AA-DUf"/>
+                                </constraints>
+                                <connections>
+                                    <segue destination="lde-jF-fSL" kind="embed" id="Ni5-O6-EET"/>
+                                </connections>
+                            </containerView>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="y3u-c8-uc5" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="88c-gW-rbT"/>
+                            <constraint firstAttribute="trailing" secondItem="y3u-c8-uc5" secondAttribute="trailing" id="Alr-ds-4AS"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="vwi-Rh-fo2" secondAttribute="bottom" id="Y6g-fa-J5t"/>
+                            <constraint firstItem="vwi-Rh-fo2" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="Z6Y-Pg-sJ0"/>
+                            <constraint firstAttribute="trailing" secondItem="vwi-Rh-fo2" secondAttribute="trailing" id="h7h-yR-6Dg"/>
+                            <constraint firstItem="y3u-c8-uc5" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="pNZ-Qv-NKS"/>
+                            <constraint firstItem="vwi-Rh-fo2" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="ulD-xF-0Y8"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="mapView" destination="vwi-Rh-fo2" id="nHU-UK-DDu"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+        </scene>
+        <!--Cloud Adapter-->
+        <scene sceneID="yST-rv-Uxh">
+            <objects>
+                <viewController id="lde-jF-fSL" customClass="CloudAdapter" customModule="ETAMessage" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="gH1-fV-qac">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="20"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Fetch" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NFh-yl-BNc">
+                                <rect key="frame" x="0.0" y="0.0" width="43.5" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Upload" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uuc-TX-0Po">
+                                <rect key="frame" x="320" y="0.0" width="55" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="XZF-nj-POd">
+                                <rect key="frame" x="51.5" y="0.0" width="20" height="20"/>
+                                <color key="color" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            </activityIndicatorView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="1Iv-ju-K3m">
+                                <rect key="frame" x="292" y="0.0" width="20" height="20"/>
+                                <color key="color" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            </activityIndicatorView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="uuc-TX-0Po" secondAttribute="trailing" id="6BJ-iz-Vym"/>
+                            <constraint firstItem="uuc-TX-0Po" firstAttribute="leading" secondItem="1Iv-ju-K3m" secondAttribute="trailing" constant="8" id="Cha-kr-hHn"/>
+                            <constraint firstItem="XZF-nj-POd" firstAttribute="leading" secondItem="NFh-yl-BNc" secondAttribute="trailing" constant="8" id="FO6-kN-Zr2"/>
+                            <constraint firstItem="1Iv-ju-K3m" firstAttribute="top" secondItem="gH1-fV-qac" secondAttribute="top" id="RfR-3X-5gp"/>
+                            <constraint firstItem="uuc-TX-0Po" firstAttribute="top" secondItem="gH1-fV-qac" secondAttribute="top" id="ZQU-kn-D6B"/>
+                            <constraint firstItem="NFh-yl-BNc" firstAttribute="top" secondItem="gH1-fV-qac" secondAttribute="top" id="fUf-Ft-WJf"/>
+                            <constraint firstItem="XZF-nj-POd" firstAttribute="top" secondItem="gH1-fV-qac" secondAttribute="top" id="r1X-1X-Ff3"/>
+                            <constraint firstItem="NFh-yl-BNc" firstAttribute="leading" secondItem="gH1-fV-qac" secondAttribute="leading" id="xgX-Pf-PWd"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="fetchActivity" destination="XZF-nj-POd" id="hoe-sk-Hdg"/>
+                        <outlet property="fetchLabel" destination="NFh-yl-BNc" id="Mmp-2x-Ry1"/>
+                        <outlet property="uploadActivity" destination="1Iv-ju-K3m" id="GVA-nx-zEf"/>
+                        <outlet property="uploadLabel" destination="uuc-TX-0Po" id="ME0-l4-3BI"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yFt-yY-4YL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="62" y="31"/>
         </scene>
     </scenes>
 </document>
