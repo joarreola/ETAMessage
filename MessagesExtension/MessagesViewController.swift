@@ -175,6 +175,30 @@ class MessagesViewController: MSMessagesAppViewController, MKMapViewDelegate, CL
         
         // Use this method to trigger UI updates in response to the message.
         print("-- didReceive ------------------------------------------------------------")
+
+        let components = URLComponents(string: (message.url?.absoluteString)!)
+        let queryItem = components?.queryItems?[0]
+        self.remoteUUID = UUID(uuidString: (queryItem?.value)!)!
+        
+        if self.remoteUUID == self.localUUID {
+            
+            return
+        }
+    
+        pollManager.remoteUserName = String(describing: self.remoteUUID)
+        
+        // set UserDefaults
+        let mySharedDefaults = UserDefaults.init(suiteName: "group.edu.ucsc.ETAMessages.SharedContainer")
+        mySharedDefaults?.set(String(describing: self.remoteUUID), forKey: "remoteUUID")
+        
+        print("-- didReceive -- self.remoteUUID: \(self.remoteUUID)\n")
+        print("--------------------------------------------------------------------------")
+        print("--------------------------------------------------------------------------")
+
+        
+        // start polling when receving message
+        print("-- didReceive -- call:self.startPolling()")
+        self.startPolling()
     }
     
     override func didStartSending(_ message: MSMessage, conversation: MSConversation) {
