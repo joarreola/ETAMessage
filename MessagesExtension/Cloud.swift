@@ -33,7 +33,7 @@ class CloudAdapter: UIViewController {
     @IBOutlet weak var uploadActivity: UIActivityIndicatorView!
 
     static var cloudIndicator = CloudIndicator()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
