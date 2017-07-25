@@ -92,7 +92,7 @@ class PollManager {
 
 
         // request notification authorization
-        //localNotification.requestAuthorization()
+        localNotification.requestAuthorization()
 
         // initialize to current local and remote postions
         self.myLocalPacket = Location(userName: localUser.name, location: localUser.location)
@@ -341,10 +341,9 @@ class PollManager {
                 alert.addButton(withTitle: "OK")
                 alert.show()
             }
-            /*
+
             setupLocalNotification(message: (self.remoteUserName) + " Will arrive in \(self.myEta!) sec")
-            setupPseudoLocalNotification(message: (self.remoteUserName) + " Will arrive in \(self.myEta!) sec")
-            */
+            //setupPseudoLocalNotification(message: (self.remoteUserName) + " Will arrive in \(self.myEta!) sec")
             
 
         case (self.etaOriginal! / 4) * 2:
@@ -365,10 +364,9 @@ class PollManager {
                 alert.addButton(withTitle: "OK")
                 alert.show()
             }
-            /*
+
             setupLocalNotification(message: (self.remoteUserName) + " Will arrive in \(self.myEta!) sec")
-            setupPseudoLocalNotification(message: (self.remoteUserName) + " Will arrive in \(self.myEta!) sec")
-            */
+            //setupPseudoLocalNotification(message: (self.remoteUserName) + " Will arrive in \(self.myEta!) sec")
             
 
         case (self.etaOriginal! / 4) * 1:
@@ -388,10 +386,9 @@ class PollManager {
                 alert.addButton(withTitle: "OK")
                 alert.show()
             }
-            /*
+
             setupLocalNotification(message: (self.remoteUserName) + " Will arrive in \(self.myEta!) sec")
-            setupPseudoLocalNotification(message: (self.remoteUserName) + " Will arrive in \(self.myEta!) sec")
-            */
+            //setupPseudoLocalNotification(message: (self.remoteUserName) + " Will arrive in \(self.myEta!) sec")
             
 
         case 0.0...self.hasArrivedEta:
@@ -414,20 +411,13 @@ class PollManager {
                 
             }
 
-            /*
-            // MARK: local notification
-
             setupLocalNotification(message: (self.remoteUserName) + " Has arrived")
+            //setupPseudoLocalNotification(message: (self.remoteUserName) + " Has arrived")
             
-            // MARK:-
-            
-            // MARK: pseudo local notification
-            
-            setupPseudoLocalNotification(message: (self.remoteUserName) + " Has arrived")
-            
-            // MARK:-
-            */
-            
+            // reset
+            let mySharedDefaults = UserDefaults.init(suiteName: "group.edu.ucsc.ETAMessages.SharedContainer")
+            mySharedDefaults?.set(false, forKey: "enabledPolling")
+
             
         default: break
             
@@ -439,7 +429,7 @@ class PollManager {
     
     func setupLocalNotification(message: String) {
         
-        //print("-- PollManager -- etaNotification() -- setupLocalNotification()")
+        print("-- PollManager -- setupLocalNotification()")
 
         self.localNotification.configureContent(milePost: message)
         
@@ -475,6 +465,8 @@ class PollManager {
         //print("-- PollManager -- enablePolling")
         
         PollManager.enabledPolling = true
+        let mySharedDefaults = UserDefaults.init(suiteName: "group.edu.ucsc.ETAMessages.SharedContainer")
+        mySharedDefaults?.set(true, forKey: "enabledPolling")
     }
 
     /// Note that polling has been disabled
@@ -485,6 +477,9 @@ class PollManager {
         PollManager.enabledPolling = false
         
         self.timer?.cancel()
+        
+        let mySharedDefaults = UserDefaults.init(suiteName: "group.edu.ucsc.ETAMessages.SharedContainer")
+        mySharedDefaults?.set(false, forKey: "enabledPolling")
     }
 
     /// presentViewController()
