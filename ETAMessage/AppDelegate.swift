@@ -8,54 +8,224 @@
 
 import UIKit
 import CoreData
+import CoreLocation
+import UserNotifications
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate, UIAlertViewDelegate, UNUserNotificationCenterDelegate {
 
     var window: UIWindow?
-
+    var locationManager = CLLocationManager()
+    var mapUpdate = MapUpdate()
+    let localUser  = Users(name: "Oscar-iphone")
+    var gpsLocation = GPSLocationAdapter()
+    
+    static var UserName = "Oscar-iphone"
+    var locPacketUpdated: Bool = false
+    static var locationManagerEnabled: Bool = true
+    var requestAlwaysAuthorization: Bool = true
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         print("-- AppDelegate -- application(didFinishLaunchingWithOptions) -----------------")
+        
+        let backgroundRefreshStatus: UIBackgroundRefreshStatus = application.backgroundRefreshStatus
+
+        print("-- AppDelegate -- application.backgroundRefreshStatus: \(backgroundRefreshStatus)")
+        
+        let state = application.applicationState
+
+        print("-- AppDelegate -- application.applicationState: \(state)")
+        
+    // MARK: REGISTER FOR PUSH NOTIFICATIONS
+
+        // Configure the user interactions first.
+        //self.configureUserInteractions()
+        
+        // Register with APNs
+        print("-- AppDelegate -- application(didFinishLaunchingWithOptions) -- REGISTER FOR PUSH NOTIFICATIONS\n")
+        //notficationSettings = UIUserNotificationSettings(types: <#T##UIUserNotificationType#>, categories: Set<UIUserNotificationCategory>?)
+        //let notficationSettings = UNNotificationSettings(types: UIUserNotificationTypeAlert, categories: nil)
+        //let notficationSettings = UNNotificationSettings(type: , categories: nil)
+        
+
+        //UIApplication.shared.registerForRemoteNotifications()
+        application.registerForRemoteNotifications()
+        
+        
+        print(application.currentUserNotificationSettings!)
+
+    // MARk:-
+
+        // move to didBecomeActive , as need usable viee controller for alerts
+        //self.getLocation()
+
         return true
     }
+    func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
+        application.registerForRemoteNotifications()
+        return true
+    }
+
+    // Handle remote notification registration.
+    @nonobjc func application(_ application: UIApplication,
+                     didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data){
+        print("-- AppDelegate -- application(didRegisterForRemoteNotificationsWithDeviceToken) ")
+
+        // Forward the token to your provider, using a custom method.
+        //self.enableRemoteNotificationFeatures()
+        //self.forwardTokenToServer(token: deviceToken)
+    }
     
+    @nonobjc func application(_ application: UIApplication,
+                     didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        print("-- AppDelegate -- application(didFailToRegisterForRemoteNotificationsWithError)")
+        
+        // The token is not currently available.
+        print("Remote notification support is unavailable due to error: \(error.localizedDescription)")
+        //self.disableRemoteNotificationFeatures()
+    }
+
+    @nonobjc func applicationDidFinishLaunching(_ aNotification: Notification) {
+        // Configure the user interactions first.
+        print("-- AppDelegate -- applicationDidFinishLaunching()")
+        //self.configureUserInteractions()
+        
+        //UIApplication.shared.registerForRemoteNotifications(matching: [.alert, .sound])
+        /*
+        // Register with APNs
+        print("-- AppDelegate -- applicationDidFinishLaunching() -- registerForRemoteNotifications")
+        UIApplication.shared.registerForRemoteNotifications()
+        */
+    }
+
+
     func application(_ application: UIApplication, handleEventsForBackgroundURLSession identifier: String, completionHandler: @escaping () -> Void) {
         print("-- AppDelegate -- application(handleEventsForBackgroundURLSession) -- identifier: \(identifier) --------------")
 
         //code
     }
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+
+        print("-- AppDelegate -- application(didReceiveRemoteNotification) -- userInfo: \(userInfo)--------------\n")
+        
+        /*
+        var message: NSString = ""
+        */
+        let alertCk: AnyObject? = userInfo["ck"] as AnyObject
+
+        //print(alertCk!["qry"])
+
+        //message = alertCk?["alert"] as! NSString
+
+        if((alertCk) != nil) {
+            
+            // get remoteUUID from userDefaults
+            let mySharedDefaults = UserDefaults.init(suiteName: "group.edu.ucsc.ETAMessages.SharedContainer")
+            let uuidObject = mySharedDefaults?.string(forKey: "remoteUUID")
+            print("-- AppDelegate -- application(didReceiveRemoteNotification) -- uuidObject: \(String(describing: uuidObject))\n")
+            self.localUser.name = String(describing: uuidObject!)
+
+
+            // fetch location record
+            print("-- AppDelegate -- application(didReceiveRemoteNotification) -- fetch: \(self.localUser.name)\n")
+
+            self.gpsLocation.fetchFromIcloud(user: self.localUser) {
+            
+                (location: Location) in
+
+                if location.latitude != nil {
+
+                    // note record and location info in alert
+                    print("-- AppDelegate -- application(didReceiveRemoteNotification) -- Location: \(String(describing: location.latitude!)), \(String(describing: location.longitude!))\n")
+                    /*
+                    // UI updates on main thread
+                    DispatchQueue.main.async { [weak self ] in
+                        
+                        if self != nil {
+                            let alert = UIAlertView()
+                            alert.title = "Location Record: \(String(describing: self?.localUser.name))"
+                            alert.message = "\(String(describing: location.latitude!)), \(String(describing: location.longitude!))"
+                            alert.addButton(withTitle: "OK")
+                            alert.show()
+                        }
+                    }
+                    */
+                    // also note in Userdefaults
+                    mySharedDefaults?.set(location.latitude!, forKey: "latitude")
+                    mySharedDefaults?.set(location.longitude!, forKey: "longitude")
+                    mySharedDefaults?.synchronize()
+                }
+                completionHandler(UIBackgroundFetchResult.newData)
+            }
+        }
+    }
 
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
-        print("-- AppDelegate -- applicationWillResignActive() ----------------------------------------------------")
+        print("-- AppDelegate -- applicationWillResignActive() --------------------------")
+        
+        self.locationManager.delegate = self
+        print("-- AppDelegate -- applicationWillResignActive() -- stopUpdatingLocation --------------\n")
+        self.locationManager.stopUpdatingLocation()
+        self.locationManager.stopMonitoringSignificantLocationChanges()
+        self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        self.locationManager.distanceFilter = kCLDistanceFilterNone
+        self.locationManager.pausesLocationUpdatesAutomatically = false
+        //self.locationManager.activityType = CLActivityType.automotiveNavigation
+        self.locationManager.activityType = CLActivityType.fitness
+        print("-- AppDelegate -- applicationWillResignActive() -- startUpdatingLocation -----\n")
+
+        self.locationManager.startUpdatingLocation()
+        //self.locationManager.startMonitoringSignificantLocationChanges()
+        
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-        print("-- AppDelegate -- applicationDidEnterBackground() --------------------------------------------------")
+        print("-- AppDelegate -- applicationDidEnterBackground() ----------------------\n")
+        print("-- AppDelegate -- applicationDidEnterBackground() -- startUpdating,startMonitoring")
+
+        print("-- AppDelegate -- applicationDidEnterBackground() -- call getLocation()...")
+        self.getLocation()
+        
+        print("-- AppDelegate -- applicationDidEnterBackground() -- startUpdating,startMonitoring")
+        self.locationManager.startUpdatingLocation()
+        self.locationManager.startMonitoringSignificantLocationChanges()
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
-        print("-- AppDelegate -- applicationWillEnterForeground() -------------------------------------------------")
+        print("-- AppDelegate -- applicationWillEnterForeground() ----------------------------------\n")
+        //print("-- AppDelegate -- applicationWillEnterForeground() -- stopMonitoring,startUpdating")
+
+        self.locationManager.stopMonitoringSignificantLocationChanges()
+        self.locationManager.startUpdatingLocation()
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-        print("-- AppDelegate -- applicationDidBecomeActive() -----------------------------------------------------")
+        print("-- AppDelegate -- applicationDidBecomeActive() ---------------------------------------")
+        
+        // check userDefaults
+        let mySharedDefaults = UserDefaults.init(suiteName: "group.edu.ucsc.ETAMessages.SharedContainer")
+        let uuidObject = mySharedDefaults?.string(forKey: "remoteUUID")
+        print("-- AppDelegate -- applicationDidBecomeActive -- uuidObject: \(String(describing: uuidObject))\n")
+        self.localUser.name = String(describing: uuidObject!)
+        
+         print("-- AppDelegate -- applicationDidBecomeActive -- call self.getLocation()...\n")
+        self.getLocation()
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         // Saves changes in the application's managed object context before the application terminates.
-        print("-- AppDelegate -- applicationWillTerminate() -------------------------------------------------------")
+        print("-- AppDelegate -- applicationWillTerminate() -----------------------------------------\n")
         self.saveContext()
     }
-    
+
 
     // MARK: - Core Data stack
 
@@ -86,14 +256,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }
         })
-        print("-- AppDelegate -- persistentContainer -- after closure ---------------------------------------------")
+        print("-- AppDelegate -- persistentContainer -- after closure -------------------------------")
         return container
     }()
 
     // MARK: - Core Data Saving support
 
     func saveContext () {
-        print("-- AppDelegate -- saveContext() --------------------------------------------------------------------")
+        print("-- AppDelegate -- saveContext() ------------------------------------------------------")
         let context = persistentContainer.viewContext
         if context.hasChanges {
             do {
@@ -106,6 +276,151 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
+
+
+    /**
+     *
+     * Called by the CLLocation Framework on GPS location changes
+     *
+     */
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+
+        // locationManager(:didUpdateLocations) guarantees that locations will not
+        // be empty
+        let location = locations.last!
+        let lmPacket = Location(userName: "", location: location)
+
+        // refresh mapView from locationManager just once
+        if !locPacketUpdated
+        {
+            
+            self.localUser.location = lmPacket
+            
+            //self.mapUpdate.refreshMapView(packet: lmPacket, mapView: mapView)
+            
+            //mapUpdate.displayUpdate(display: display, string: "locationManager...")
+            
+            locPacketUpdated = true
+            
+        }
+
+         // abort if disabled
+         if !AppDelegate.locationManagerEnabled {
+         
+         return
+         }
+
+        // nothing to update if same location
+        if lmPacket.latitude == localUser.location.latitude &&
+            lmPacket.longitude == localUser.location.longitude
+        {
+            
+            return
+        }
+
+        // A new location: update User's Location object
+        print("-- AppDelegate -- locationManager -- location: '\(location)'\n")
+        
+        //gpsLocation.updateUserCoordinates(localUser: localUser, packet: lmPacket)
+        self.localUser.location = lmPacket
+        
+        //if (UploadingManager.enabledUploading) {
+        // refresh mapView if enabledUploading
+        /*
+         // don't refresh MapView centered on localUser if polling enabled
+         if !PollManager.enabledPolling {
+         //print("-- locationManager -- refresh mapView for localUser")
+         
+         self.mapUpdate.refreshMapView(packet: localUser.location, mapView: mapView)
+         }
+         */
+        let mySharedDefaults = UserDefaults.init(suiteName: "group.edu.ucsc.ETAMessages.SharedContainer")
+        let uuidObject = mySharedDefaults?.string(forKey: "remoteUUID")
+        print("-- AppDelegate -- locationManager -- uuidObject: \(String(describing: uuidObject))\n")
+        
+        localUser.name = String(describing: uuidObject!)
+
+        print("-- AppDelegate -- locationManager -- call: self.gpsLocation.uploadToIcloud(user: localUser.name)\n")
+        self.gpsLocation.uploadToIcloud(user: localUser) {
+            
+            (result: Bool) in
+            
+            print("-- AppDelegate -- locationManager -- self.gpsLocation.uploadToIcloud() -- closure -- result: \(result)\n")
+            
+            //self.gpsLocation.handleUploadResult(result, display: self.display, localUser: self.localUser, remoteUser: self.remoteUser, mapView: self.mapView, pollManager: self.pollManager)
+        }
+ 
+        //}
+    }
+    
+    
+    @nonobjc func locationManager(manager: CLLocationManager!,
+                                  didFailWithError error: NSError!) {
+        
+        print("-- AppDelegate -- locationManager -- didFailWithError: \(error.description)\n")
+        let alert: UIAlertControllerStyle = UIAlertControllerStyle.alert
+        let errorAlert = UIAlertController(title: "Error",
+                                           message: "Failed to Get Your Location",
+                                           preferredStyle: alert)
+        errorAlert.show(UIViewController(), sender: manager)
+        
+    }
+
+    func getLocation() {
+        print("-- AppDelegate -- getLocation() -------------------------------------------\n")
+
+        self.locationManager = CLLocationManager()
+        self.locationManager.delegate = self
+        if self.locationManager.responds(to: #selector(getter: self.requestAlwaysAuthorization)) {
+            self.locationManager.requestAlwaysAuthorization()
+        }
+        self.locationManager.distanceFilter = kCLDistanceFilterNone
+        self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        self.locationManager.activityType = CLActivityType.fitness
+        //self.locationManager.activityType = CLActivityType.automotiveNavigation
+        /*
+        if !CLLocationManager.locationServicesEnabled() {
+            // location services is disabled, alert user
+            /*
+            //let servicesDisabledAlert = UIAlertView(title: "Alert", message: "Location service is disable. Please enable to access your current location.", delegate: nil, cancelButtonTitle: "OK", otherButtonTitles: "")
+            */
+            
+            print("-- AppDelegate -- getLocation() - pre alert\n")
+            let alert = UIAlertController(title: "Alert", message: "Location service is disable. Please enable to access your current location.", preferredStyle: UIAlertControllerStyle.alert)
+            let defaultAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default) {
+                (action) in
+                print("-- AppDelegate -- getLocation() -- UIAlertAction() -- closure -- action: \(action)\n")
+            }
+            alert.addAction(defaultAction)
+            let view = ViewController()
+            view.present(alert, animated: true, completion:nil)
+            print("-- AppDelegate -- getLocation() - post alert\n")
+
+            
+            /*
+            UIAlertController* alert: UIAlertController = [UIAlertController alertControllerWithTitle:@"My Alert"
+                message:@"This is an alert."
+                preferredStyle:UIAlertControllerStyleAlert];
+            
+            UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                handler:^(UIAlertAction * action) {}];
+            
+            [alert addAction:defaultAction];
+            [self presentViewController:alert animated:YES completion:nil];
+            */
+        }
+        else {
+        */
+            print("-- AppDelegate -- getLocation() -- call: self.locationManager.startUpdatingLocation()\n")
+            self.locationManager.startUpdatingLocation()
+            self.locationManager.startMonitoringSignificantLocationChanges()
+        //}
+    }
+/*
+    func configureUserInteractions() {
+    
+    }
+*/
 
 }
 
