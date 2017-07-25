@@ -88,7 +88,6 @@ class MobilitySimulator {
                     DispatchQueue.main.async { [weak self ] in
                         
                         if self != nil && !PollManager.enabledPolling {
-                            
                            
                             self?.mapUpdate.displayUpdate(display: display, localPacket: (self?.origLocation)!, remotePacket: (self?.tempUser.location)!, string: "Simulation: upload to iCloud failed")
                             
@@ -103,6 +102,7 @@ class MobilitySimulator {
                     DispatchQueue.main.async { [weak self ] in
                         
                         if self != nil && !PollManager.enabledPolling {
+                        
                             print("-- MobilitySimulator -- call self?.mapUpdate.displayUpdate() -- self?.tempUser.location: \(String(describing: self?.tempUser.location))\n")
 
                             self?.mapUpdate.displayUpdate(display: display, localPacket: (self?.origLocation)!, remotePacket: (self?.tempUser.location)!, string: "Simulation: uploaded to iCloud")
@@ -158,6 +158,9 @@ class MobilitySimulator {
     func stopMobilitySimulator() {
 
         MobilitySimulator.mobilitySimulatorEnabled = false
+        
+        let mySharedDefaults = UserDefaults.init(suiteName: "group.edu.ucsc.ETAMessages.SharedContainer")
+        mySharedDefaults?.set(false, forKey: "mobilitySimulatorEnabled")
     }
 
 }
