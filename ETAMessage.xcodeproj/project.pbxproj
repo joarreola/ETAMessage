@@ -13,6 +13,7 @@
 		DF6B28461F11972A00DADC13 /* Uploading.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6B28451F11972A00DADC13 /* Uploading.swift */; };
 		DF6B28481F11975600DADC13 /* Cloud.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6B28471F11975600DADC13 /* Cloud.swift */; };
 		DF6B284A1F11978000DADC13 /* GPSLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6B28491F11978000DADC13 /* GPSLocation.swift */; };
+		DF7069621F291BF600C1753E /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF8D89841F19821700FC57F0 /* CloudKit.framework */; };
 		DF7DE3EC1F0EBABE00F62FC2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF7DE3EB1F0EBABE00F62FC2 /* AppDelegate.swift */; };
 		DF7DE3EE1F0EBABE00F62FC2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF7DE3ED1F0EBABE00F62FC2 /* ViewController.swift */; };
 		DF7DE3F11F0EBABE00F62FC2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DF7DE3EF1F0EBABE00F62FC2 /* Main.storyboard */; };
@@ -160,6 +161,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DF7DE42D1F0EBAED00F62FC2 /* Messages.framework in Frameworks */,
+				DF7069621F291BF600C1753E /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
