@@ -8,15 +8,16 @@
 
 import UIKit
 import CoreData
-import CoreLocation
+//import CoreLocation
 import UserNotifications
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate, UIAlertViewDelegate, UNUserNotificationCenterDelegate {
+//class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate, UIAlertViewDelegate, UNUserNotificationCenterDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UIAlertViewDelegate, UNUserNotificationCenterDelegate {
 
     var window: UIWindow?
-    var locationManager = CLLocationManager()
-    var mapUpdate = MapUpdate()
+    //var locationManager = CLLocationManager()
+    //var mapUpdate = MapUpdate()
     let localUser  = Users(name: "Oscar-iphone")
     var gpsLocation = GPSLocationAdapter()
     
@@ -27,15 +28,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        print("-- AppDelegate -- application(didFinishLaunchingWithOptions) -----------------")
+        print("-- AppDelegate -- application(didFinishLaunchingWithOptions) -----------------\n")
         
-        let backgroundRefreshStatus: UIBackgroundRefreshStatus = application.backgroundRefreshStatus
+        let backgroundRefreshStatus: UIBackgroundRefreshStatus = UIBackgroundRefreshStatus(rawValue: application.backgroundRefreshStatus.rawValue)!
 
-        print("-- AppDelegate -- application.backgroundRefreshStatus: \(backgroundRefreshStatus)")
+        print("-- AppDelegate -- application.backgroundRefreshStatus: \(backgroundRefreshStatus)\n")
         
         let state = application.applicationState
 
-        print("-- AppDelegate -- application.applicationState: \(state)")
+        print("-- AppDelegate -- application.applicationState: \(state)\n")
         
     // MARK: REGISTER FOR PUSH NOTIFICATIONS
 
@@ -44,12 +45,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         
         // Register with APNs
         print("-- AppDelegate -- application(didFinishLaunchingWithOptions) -- REGISTER FOR PUSH NOTIFICATIONS\n")
-        //notficationSettings = UIUserNotificationSettings(types: <#T##UIUserNotificationType#>, categories: Set<UIUserNotificationCategory>?)
+        //notficationSettings = UIUserNotificationSettings(types: UIUserNotificationType, categories: Set<UIUserNotificationCategory>?)
         //let notficationSettings = UNNotificationSettings(types: UIUserNotificationTypeAlert, categories: nil)
         //let notficationSettings = UNNotificationSettings(type: , categories: nil)
         
 
-        //UIApplication.shared.registerForRemoteNotifications()
         application.registerForRemoteNotifications()
         
         
@@ -57,20 +57,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
 
     // MARk:-
 
-        // move to didBecomeActive , as need usable viee controller for alerts
-        //self.getLocation()
-
         return true
     }
+
     func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
-        application.registerForRemoteNotifications()
+        print("-- AppDelegate -- application(willFinishLaunchingWithOptions)\n")
+
         return true
     }
 
     // Handle remote notification registration.
     @nonobjc func application(_ application: UIApplication,
                      didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data){
-        print("-- AppDelegate -- application(didRegisterForRemoteNotificationsWithDeviceToken) ")
+        print("-- AppDelegate -- application(didRegisterForRemoteNotificationsWithDeviceToken)\n")
 
         // Forward the token to your provider, using a custom method.
         //self.enableRemoteNotificationFeatures()
@@ -82,13 +81,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         print("-- AppDelegate -- application(didFailToRegisterForRemoteNotificationsWithError)")
         
         // The token is not currently available.
-        print("Remote notification support is unavailable due to error: \(error.localizedDescription)")
+        print("Remote notification support is unavailable due to error: \(error.localizedDescription)\n")
         //self.disableRemoteNotificationFeatures()
     }
 
     @nonobjc func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Configure the user interactions first.
-        print("-- AppDelegate -- applicationDidFinishLaunching()")
+        print("-- AppDelegate -- applicationDidFinishLaunching(aNotification) -- aNotification: \(aNotification)\n")
+        
+        
         //self.configureUserInteractions()
         
         //UIApplication.shared.registerForRemoteNotifications(matching: [.alert, .sound])
@@ -101,10 +102,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
 
 
     func application(_ application: UIApplication, handleEventsForBackgroundURLSession identifier: String, completionHandler: @escaping () -> Void) {
-        print("-- AppDelegate -- application(handleEventsForBackgroundURLSession) -- identifier: \(identifier) --------------")
+        print("-- AppDelegate -- application(handleEventsForBackgroundURLSession) -- identifier: \(identifier) --------------\n")
 
         //code
     }
+
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
 
         print("-- AppDelegate -- application(didReceiveRemoteNotification) -- userInfo: \(userInfo)--------------\n")
@@ -113,19 +115,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         var message: NSString = ""
         */
         let alertCk: AnyObject? = userInfo["ck"] as AnyObject
-
         //print(alertCk!["qry"])
+        let alertQry: AnyObject? = alertCk?["qry"] as AnyObject
+        //print(alertQry ?? "None")
+        let alertRid: AnyObject? = alertQry?["rid"] as AnyObject
+        print(alertRid ?? "None")
+        let rid = String(describing: alertRid!)
+        
 
         //message = alertCk?["alert"] as! NSString
 
-        if((alertCk) != nil) {
-            
-            // get remoteUUID from userDefaults
-            let mySharedDefaults = UserDefaults.init(suiteName: "group.edu.ucsc.ETAMessages.SharedContainer")
-            let uuidObject = mySharedDefaults?.string(forKey: "remoteUUID")
-            print("-- AppDelegate -- application(didReceiveRemoteNotification) -- uuidObject: \(String(describing: uuidObject))\n")
-            self.localUser.name = String(describing: uuidObject!)
+        // get remoteUUID from userDefaults
+        let mySharedDefaults = UserDefaults.init(suiteName: "group.edu.ucsc.ETAMessages.SharedContainer")
+        let uuidObject = mySharedDefaults?.string(forKey: "remoteUUID")
+        self.localUser.name = String(describing: uuidObject!)
 
+        if((alertCk) != nil && rid == self.localUser.name) {
 
             // fetch location record
             print("-- AppDelegate -- application(didReceiveRemoteNotification) -- fetch: \(self.localUser.name)\n")
@@ -138,34 +143,45 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
 
                     // note record and location info in alert
                     print("-- AppDelegate -- application(didReceiveRemoteNotification) -- Location: \(String(describing: location.latitude!)), \(String(describing: location.longitude!))\n")
-                    /*
-                    // UI updates on main thread
+                    
+                    // Visible only when ETAMessage "C-app" is in foreground.
+                    // Blocks on OK button.
                     DispatchQueue.main.async { [weak self ] in
                         
                         if self != nil {
+                            /*
                             let alert = UIAlertView()
                             alert.title = "Location Record: \(String(describing: self?.localUser.name))"
                             alert.message = "\(String(describing: location.latitude!)), \(String(describing: location.longitude!))"
-                            alert.addButton(withTitle: "OK")
+                            //alert.addButton(withTitle: "OK")
                             alert.show()
+                            */
+                            
+                            // from locationManager
+                            let alert: UIAlertControllerStyle = UIAlertControllerStyle.alert
+                            let locationAlert = UIAlertController(title: "Remote Location",
+                                                               message: "\(String(describing: location.latitude!)), \(String(describing: location.longitude!))",
+                                                               preferredStyle: alert)
+                            //errorAlert.show(UIViewController(), sender: manager)
+                            locationAlert.show(UIViewController(), sender: application)
                         }
                     }
-                    */
+                    
                     // also note in Userdefaults
                     mySharedDefaults?.set(location.latitude!, forKey: "latitude")
                     mySharedDefaults?.set(location.longitude!, forKey: "longitude")
                     mySharedDefaults?.synchronize()
                 }
-                completionHandler(UIBackgroundFetchResult.newData)
             }
         }
+        completionHandler(UIBackgroundFetchResult.newData)
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
         print("-- AppDelegate -- applicationWillResignActive() --------------------------")
-        
+        /*
         self.locationManager.delegate = self
         print("-- AppDelegate -- applicationWillResignActive() -- stopUpdatingLocation --------------\n")
         self.locationManager.stopUpdatingLocation()
@@ -179,6 +195,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
 
         self.locationManager.startUpdatingLocation()
         //self.locationManager.startMonitoringSignificantLocationChanges()
+        */
+        
+        // check userDefaults
+        let mySharedDefaults = UserDefaults.init(suiteName: "group.edu.ucsc.ETAMessages.SharedContainer")
+        let uuidObject = mySharedDefaults?.string(forKey: "remoteUUID")
+        print("-- AppDelegate -- applicationWillResignActive -- uuidObject: \(String(describing: uuidObject))\n")
+        self.localUser.name = String(describing: uuidObject!)
+        
+        // subscribe here
+        print("-- AppDelegate -- applicationWillResignActive() -- subscribe: \(String(describing: uuidObject!))\n")
+        let cloud = CloudAdapter()
+        cloud.subscribe(userUUID: String(describing: uuidObject!))
         
     }
 
@@ -186,6 +214,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
         print("-- AppDelegate -- applicationDidEnterBackground() ----------------------\n")
+        
+        /*
         print("-- AppDelegate -- applicationDidEnterBackground() -- startUpdating,startMonitoring")
 
         print("-- AppDelegate -- applicationDidEnterBackground() -- call getLocation()...")
@@ -194,29 +224,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         print("-- AppDelegate -- applicationDidEnterBackground() -- startUpdating,startMonitoring")
         self.locationManager.startUpdatingLocation()
         self.locationManager.startMonitoringSignificantLocationChanges()
+        */
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
         print("-- AppDelegate -- applicationWillEnterForeground() ----------------------------------\n")
+        
+        /*
         //print("-- AppDelegate -- applicationWillEnterForeground() -- stopMonitoring,startUpdating")
 
         self.locationManager.stopMonitoringSignificantLocationChanges()
         self.locationManager.startUpdatingLocation()
+        */
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
         print("-- AppDelegate -- applicationDidBecomeActive() ---------------------------------------")
-        
-        // check userDefaults
-        let mySharedDefaults = UserDefaults.init(suiteName: "group.edu.ucsc.ETAMessages.SharedContainer")
-        let uuidObject = mySharedDefaults?.string(forKey: "remoteUUID")
-        print("-- AppDelegate -- applicationDidBecomeActive -- uuidObject: \(String(describing: uuidObject))\n")
-        self.localUser.name = String(describing: uuidObject!)
-        
-         print("-- AppDelegate -- applicationDidBecomeActive -- call self.getLocation()...\n")
-        self.getLocation()
+
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
@@ -283,6 +309,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
      * Called by the CLLocation Framework on GPS location changes
      *
      */
+/*
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
 
         // locationManager(:didUpdateLocations) guarantees that locations will not
@@ -352,8 +379,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
  
         //}
     }
-    
-    
+
+
     @nonobjc func locationManager(manager: CLLocationManager!,
                                   didFailWithError error: NSError!) {
         
@@ -365,7 +392,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         errorAlert.show(UIViewController(), sender: manager)
         
     }
-
+*/
+    
+/*
     func getLocation() {
         print("-- AppDelegate -- getLocation() -------------------------------------------\n")
 
@@ -376,8 +405,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         }
         self.locationManager.distanceFilter = kCLDistanceFilterNone
         self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        self.locationManager.activityType = CLActivityType.fitness
-        //self.locationManager.activityType = CLActivityType.automotiveNavigation
+        //self.locationManager.activityType = CLActivityType.fitness
+        self.locationManager.activityType = CLActivityType.automotiveNavigation
         /*
         if !CLLocationManager.locationServicesEnabled() {
             // location services is disabled, alert user
@@ -416,6 +445,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
             self.locationManager.startMonitoringSignificantLocationChanges()
         //}
     }
+ */
+
 /*
     func configureUserInteractions() {
     
