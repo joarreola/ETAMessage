@@ -103,6 +103,7 @@ class MessagesViewController: MSMessagesAppViewController, MKMapViewDelegate, CL
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
         print("-- didReceiveMemoryWarning ----------------------------------------------")
+
     }
     
     // MARK: - Conversation Handling
@@ -175,7 +176,7 @@ class MessagesViewController: MSMessagesAppViewController, MKMapViewDelegate, CL
         
         // Use this method to trigger UI updates in response to the message.
         print("-- didReceive ------------------------------------------------------------")
-
+        /*
         let components = URLComponents(string: (message.url?.absoluteString)!)
         let queryItem = components?.queryItems?[0]
         self.remoteUUID = UUID(uuidString: (queryItem?.value)!)!
@@ -192,13 +193,15 @@ class MessagesViewController: MSMessagesAppViewController, MKMapViewDelegate, CL
         mySharedDefaults?.set(String(describing: self.remoteUUID), forKey: "remoteUUID")
         
         print("-- didReceive -- self.remoteUUID: \(self.remoteUUID)\n")
-        print("--------------------------------------------------------------------------")
-        print("--------------------------------------------------------------------------")
-
         
+        // add a subscription
+        print("-- didReceive -- call: pollManager.cloudRemote.subscribe()\n")
+        pollManager.cloudRemote.subscribe(userUUID: String(describing: self.remoteUUID))
+
         // start polling when receving message
         print("-- didReceive -- call:self.startPolling()")
         self.startPolling()
+        */
     }
     
     override func didStartSending(_ message: MSMessage, conversation: MSConversation) {
@@ -682,11 +685,11 @@ class MessagesViewController: MSMessagesAppViewController, MKMapViewDelegate, CL
         localUser.location.userName = String(describing: self.localUUID)
         remoteUser.name = String(describing: self.remoteUUID)
         remoteUser.location.userName = String(describing: self.remoteUUID)
-        
-        // remove cloud record
+
+        // remove cloud record - but will result in a fetch failure!
         pollManager.cloudRemote.deleteRecord(userUUID: localUser.name)
         pollManager.cloudRemote.deleteRecord(userUUID: remoteUser.name)
-        
+
         // clear display
         mapUpdate.displayUpdate(display: display)
         
