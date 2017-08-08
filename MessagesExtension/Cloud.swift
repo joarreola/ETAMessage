@@ -63,8 +63,9 @@ class CloudAdapter: UIViewController {
 
         // do here instead
         let locationRecordID: CKRecordID = CKRecordID(recordName: userUUID)
-        let myContainer: CKContainer = CKContainer.default()
+        let myContainer: CKContainer = CKContainer.init(identifier: "iCloud.edu.ucsc.ETAMessages.MessagesExtension")
         let publicDatabase: CKDatabase = myContainer.publicCloudDatabase
+        
     
         publicDatabase.fetch(withRecordID: locationRecordID) {
 
@@ -115,7 +116,7 @@ class CloudAdapter: UIViewController {
 
         // do here instead
         let locationRecordID: CKRecordID = CKRecordID(recordName: userUUID)
-        let myContainer: CKContainer = CKContainer.default()
+        let myContainer: CKContainer = CKContainer.init(identifier: "iCloud.edu.ucsc.ETAMessages.MessagesExtension")
         let publicDatabase: CKDatabase = myContainer.publicCloudDatabase
 
         publicDatabase.delete(withRecordID: locationRecordID) {
@@ -153,10 +154,12 @@ class CloudAdapter: UIViewController {
         // do here instead
         let locationRecordID: CKRecordID = CKRecordID(recordName: user.name)
         let locationRecord: CKRecord = CKRecord(recordType: "Location", recordID: locationRecordID)
+        //var recordToSave: CKRecord = CKRecord(recordType: "Location", recordID: locationRecordID)
         locationRecord["Location"] = user.location as? CKRecordValue
         recordToSave = locationRecord
 
-        let myContainer: CKContainer = CKContainer.default()
+        //let myContainer: CKContainer = CKContainer.default()
+        let myContainer: CKContainer = CKContainer.init(identifier: "iCloud.edu.ucsc.ETAMessages.MessagesExtension")
         let publicDatabase: CKDatabase = myContainer.publicCloudDatabase
 
         publicDatabase.fetch(withRecordID: locationRecordID) {
@@ -182,11 +185,12 @@ class CloudAdapter: UIViewController {
                 //record.setObject(aValue, forKey: attributeToChange)
                 record?.setObject(user.location.latitude! as CKRecordValue, forKey: "latitude")
                 record?.setObject(user.location.longitude! as CKRecordValue, forKey: "longitude")
-                
                 recordToSave = record!
+                
             }
 
             // call save() method while in the fetch closure
+            print("-- CloudAdapter -- upload() -- publicDatabase.save -- recordToSave: \(recordToSave)\n")
             publicDatabase.save(recordToSave) {
                 (record, error) in
 
@@ -221,5 +225,114 @@ class CloudAdapter: UIViewController {
             }
         }
     }
+    
+    /// Add a subscription to get a notification on a record change
+    /// - Parameters:
+    ///     - userUUID: UUID for remote user (passed in UUID image)
+    
+    func subscribe(userUUID: String) {
+        
+        //print("-- CloudAdapter -- subscribe() --------------------------------------")
+        
+        // get record and container
+        let locationRecordID: CKRecordID = CKRecordID(recordName: userUUID)
+        let locationRecord: CKRecord = CKRecord(recordType: "Location", recordID: locationRecordID)
+        let myContainer: CKContainer = CKContainer.init(identifier: "iCloud.edu.ucsc.ETAMessages.MessagesExtension")
+        let publicDatabase: CKDatabase = myContainer.publicCloudDatabase
+
+        let predicate =  NSPredicate(format: "recordID = %@", CKRecordID(recordName: userUUID))
+        let locationSubscription = CKQuerySubscription(recordType: "Location", predicate: predicate, options: CKQuerySubscriptionOptions.firesOnRecordUpdate)
+        
+        let locationNotificationInfo = CKNotificationInfo()
+        
+        locationNotificationInfo.shouldSendContentAvailable = true
+        
+        locationNotificationInfo.shouldBadge = false
+        
+        locationNotificationInfo.alertBody = "Record Updated"
+        
+        locationSubscription.notificationInfo = locationNotificationInfo
+        
+        /*
+        let operation = CKModifySubscriptionsOperation(subscriptionsToSave: [locationSubscription], subscriptionIDsToDelete: [])
+        
+        operation.modifySubscriptionsCompletionBlock = {
+            
+            savedSubscriptions, deletedSubscriptionIDs, operationError in
+            
+            if operationError != nil {
+                
+                print("-- CloudAdapter -- subscribe() -- operation.modifySubscriptionsCompletionBlock -- closure -- error: \(String(describing: operationError))\n")
+                
+            } else {
+                
+                print("-- CloudAdapter -- subscribe() -- operation.modifySubscriptionsCompletionBlock -- closure -- Subscribed\n")
+            }
+        }
+        
+        publicDatabase.add(operation)
+        */
+        publicDatabase.save(locationSubscription, completionHandler:
+            
+            ({returnRecord, error in
+    
+            if let err = error {
+                print("-- CloudAdapter -- subscribe() --  publicDatabase.save(locationSubscription) -- closure -- err: \(err.localizedDescription)\n")
+                
+                return
+                
+            }
+            DispatchQueue.main.async() {
+                print("-- CloudAdapter -- subscribe() --  publicDatabase.save(locationSubscription) -- closure -- returnRecord: \(String(describing: returnRecord))\n")
+                
+                    return
+            }
+        }))
+    }
+    
+    /// Remove all subscriptions
+    /// - Parameters:
+    ///     -
+    func removeAllSubscriptions() {
+        print("-- CloudAdapter -- removeAllSubscriptions()\n")
+
+        //let myContainer: CKContainer = CKContainer.default()
+        let myContainer: CKContainer = CKContainer.init(identifier: "iCloud.edu.ucsc.ETAMessages.MessagesExtension")
+        let publicDatabase: CKDatabase = myContainer.publicCloudDatabase
+
+        let semaphore = DispatchSemaphore(value: 0)
+
+        // get subscriptions
+        publicDatabase.fetchAllSubscriptions() {
+            
+            (subscriptions, error) in
+    
+            if let err = error {
+        
+                print("-- CloudAdapter -- removeAllSubscriptions() -- publicDatabase.fetchAllSubscriptions() -- closure -- err: \(err)\n")
+    
+            } else {
+    
+                for subscription in subscriptions! {
+                    publicDatabase.delete(withSubscriptionID: String(describing: subscription)) {
+                        
+                        (string, error) in
+    
+                        if let err = error {
+
+                            print("-- CloudAdapter -- removeAllSubscriptions() -- publicDatabase.delete(withSubscriptionID) -- closure -- err: \(String(describing: err))\n")
+                            
+                            return
+                        }
+                        print("-- CloudAdapter -- removeAllSubscriptions() -- publicDatabase.delete(withSubscriptionID) -- closure -- string: \(String(describing: string))\n")
+                        
+                        semaphore.signal()
+                    }
+                    semaphore.wait()
+                }
+            }
+        }
+    }
+
 }
 
