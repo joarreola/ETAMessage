@@ -398,16 +398,20 @@ class PollManager {
             print("=====================================================================/n")
             
             // do UI updates in the main thread
-            OperationQueue.main.addOperation() {
+            //OperationQueue.main.addOperation() {
+            DispatchQueue.main.async { [weak self ] in
                 
-                mapUpdate.displayUpdate(display: display, localPacket: self.myLocalPacket, remotePacket: self.myRemotePacket, string: "eta:\t\t\((self.myEta!)) sec", secondString: "\(self.remoteUserName) Has arrived")
+                if self != nil {
                 
-                // do an alert
-                let alert = UIAlertView()
-                alert.title = "ETAMessage"
-                alert.message = "\(self.remoteUserName) HAS ARRIVED"
-                alert.addButton(withTitle: "OK")
-                alert.show()
+                    mapUpdate.displayUpdate(display: display, localPacket: (self?.myLocalPacket)!, remotePacket: (self?.myRemotePacket)!, string: "eta:\t\t\(String(describing: (self?.myEta!))) sec", secondString: "\(String(describing: self?.remoteUserName)) Has arrived")
+                
+                    // do an alert
+                    let alert = UIAlertView()
+                    alert.title = "ETAMessage"
+                    alert.message = "\(String(describing: self?.remoteUserName)) HAS ARRIVED"
+                    alert.addButton(withTitle: "OK")
+                    alert.show()
+                }
                 
             }
 
