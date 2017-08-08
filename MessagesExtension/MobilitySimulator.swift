@@ -47,10 +47,12 @@ class MobilitySimulator {
         
         // update localUser location
         user.location.longitude = user.location.longitude! - deltaLongitude
+        
+        print("-- MobilitySimulator -- call(1): self.gpsLocation.uploadToIcloud(user: self.tempUser) -- self.tempUser: \(self.tempUser) -- user.location.longitude: \(String(describing: user.location.longitude))\n")
         self.gpsLocation.uploadToIcloud(user: self.tempUser)  {
             
             (result: Bool) in
-            print("-- MobilitySimulator -- self.gpsLocation.uploadToIcloud(user: self.tempUser) -- result: \(result)\n")
+            print("-- MobilitySimulator -- self.gpsLocation.uploadToIcloud(user: self.tempUser) -- result: \(result) for call(1)\n")
             
             // UI updates on main thread
             DispatchQueue.main.async { [weak self ] in
@@ -76,12 +78,12 @@ class MobilitySimulator {
 
         timer?.setEventHandler(handler: {
 
-            print("-- MobilitySimulator -- call: self.gpsLocation.uploadToIcloud(user: self.tempUser) -- self.tempUser: \(self.tempUser)\n")
+            print("-- MobilitySimulator -- call(2): self.gpsLocation.uploadToIcloud(user: self.tempUser) -- self.tempUser: \(self.tempUser)\n")
 
             self.gpsLocation.uploadToIcloud(user: self.tempUser) {
 
                 (result: Bool) in
-
+                print("-- MobilitySimulator -- self.gpsLocation.uploadToIcloud() -- closure -- result: \(result)\n")
                 if !result {
 
                     // UI updates on main thread
@@ -130,6 +132,8 @@ class MobilitySimulator {
 
                     // check if there
                     if Double(self.tempUser.location.longitude!) >= Double(self.origLocation.longitude!) || MobilitySimulator.mobilitySimulatorEnabled == false {
+
+                        print("-- MobilitySimulator -- self.gpsLocation.uploadToIcloud() -- closure -- disabling simulator\n")
 
                         self.timer?.cancel()
 
